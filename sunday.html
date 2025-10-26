@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>Warehouse Inventory</title>
+  <link rel="stylesheet" href="day.css" />
+</head>
+<body>
+
+  <div class="day-tabs">
+    <a href="./index.html" class="day-tab" data-day="monday">ALL</a>
+    <a href="./monday.html" class="day-tab" data-day="monday">월요일</a>
+    <a href="./tuesday.html" class="day-tab" data-day="tuesday">화요일</a>
+    <a href="./wednesday.html" class="day-tab" data-day="wednesday">수요일</a>
+    <a href="./thursday.html" class="day-tab" data-day="thursday">목요일</a>
+    <a href="./friday.html" class="day-tab" data-day="friday">금요일</a>
+    <a href="./sunday.html" class="day-tab active" data-day="sunday">일요일</a>
+  </div>
+
+  <h1>📦 일요일 📦</h1>
+
+  <h1>지앤1</h1>
+  <table id="gnfs-1">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>품목명</th>
+        <th>최소 발주량</th>
+        <th>발주 기준</th>
+        <th>위치</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <h1>지앤2</h1>
+  <table id="gnfs-2">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>품목명</th>
+        <th>최소 발주량</th>
+        <th>발주 기준</th>
+        <th>위치</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <h1>지앤3</h1>
+  <table id="gnfs-3">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>품목명</th>
+        <th>최소 발주량</th>
+        <th>발주 기준</th>
+        <th>위치</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <h1>지앤4</h1>
+  <table id="gnfs-4">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>품목명</th>
+        <th>최소 발주량</th>
+        <th>발주 기준</th>
+        <th>위치</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <h1>지앤5</h1>
+  <table id="gnfs-5">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>품목명</th>
+        <th>최소 발주량</th>
+        <th>발주 기준</th>
+        <th>위치</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <h1>지앤6</h1>
+  <table id="gnfs-6">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>품목명</th>
+        <th>최소 발주량</th>
+        <th>발주 기준</th>
+        <th>위치</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <h1>웰푸드1</h1>
+  <table id="well-1">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>품목명</th>
+        <th>최소 발주량</th>
+        <th>발주 기준</th>
+        <th>위치</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <h1>웰푸드2</h1>
+  <table id="well-2">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>품목명</th>
+        <th>최소 발주량</th>
+        <th>발주 기준</th>
+        <th>위치</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <h1>미르스타</h1>
+  <table id="mirstar">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>품목명</th>
+        <th>최소 발주량</th>
+        <th>발주 기준</th>
+        <th>위치</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <h1>마루비시</h1>
+  <table id="marubishi">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>품목명</th>
+        <th>최소 발주량</th>
+        <th>발주 기준</th>
+        <th>위치</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <script src="row_data.js"></script>
+  <script src="supplier_data.js"></script>
+  <script>
+    renderTableRows(gnfs_1, document.querySelector("#gnfs-1 tbody"));
+    renderTableRows(gnfs_2, document.querySelector("#gnfs-2 tbody"));
+    renderTableRows(gnfs_3, document.querySelector("#gnfs-3 tbody"));
+    renderTableRows(gnfs_4, document.querySelector("#gnfs-4 tbody"));
+    renderTableRows(gnfs_5, document.querySelector("#gnfs-5 tbody"));
+    renderTableRows(gnfs_6, document.querySelector("#gnfs-6 tbody"));
+    renderTableRows(well_1, document.querySelector("#well-1 tbody"));
+    renderTableRows(well_2, document.querySelector("#well-2 tbody"));
+    renderTableRows(mirstar, document.querySelector("#mirstar tbody"));
+    renderTableRows(marubishi, document.querySelector("#marubishi tbody"));
+  </script>
+</body>
+</html>

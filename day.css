@@ -1,0 +1,68 @@
+body {
+    font-family: "Pretendard", Arial, sans-serif;
+    background: #f9fafb;
+    padding: 40px;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+th,
+td {
+    border: 1px solid #ddd;
+    padding: 10px 14px;
+    text-align: left;
+}
+
+th {
+    background: #f3f4f6;
+}
+
+tr:hover {
+    background-color: #f9f9f9;
+}
+
+img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.day-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 20px 0 30px;
+}
+
+.day-tab {
+    text-decoration: none;
+    background-color: #f2f2f2;
+    color: #333;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-size: 15px;
+    transition: all 0.25s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.day-tab:hover {
+    background-color: #e0e0e0;
+    transform: translateY(-2px);
+}
+
+.day-tab.active {
+    background-color: #007bff;
+    color: white;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+}
