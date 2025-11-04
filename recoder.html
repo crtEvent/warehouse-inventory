@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Warehouse Inventory</title>
+    <link rel="stylesheet" href="day.css" />
+    <style>
+        .search-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        input {
+            padding: 8px;
+            font-size: 16px;
+            width: 250px;
+        }
+
+        #result {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .highlight {
+            background-color: yellow !important;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="day-tabs">
+        <a href="./index.html" class="day-tab" data-day="monday">ALL</a>
+        <a href="./monday.html" class="day-tab" data-day="monday">월요일</a>
+        <a href="./tuesday.html" class="day-tab" data-day="tuesday">화요일</a>
+        <a href="./wednesday.html" class="day-tab" data-day="wednesday">수요일</a>
+        <a href="./thursday.html" class="day-tab" data-day="thursday">목요일</a>
+        <a href="./friday.html" class="day-tab" data-day="friday">금요일</a>
+        <a href="./sunday.html" class="day-tab" data-day="sunday">일요일</a>
+        <a href="./recoder.html" class="day-tab active" data-day="sunday">불출기록</a>
+    </div>
+
+    <h1>📦 불출기록 📦</h1>
+
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="품명을 입력하세요">
+        <div id="result"></div>
+    </div>
+
+    <table id="itemTable">
+        <thead>
+            <tr>
+                <th>[1] 지엔</th>
+                <th>[2] 지엔</th>
+                <th>[3] 지엔</th>
+                <th>[4] 지엔</th>
+                <th>[5] 웰푸드</th>
+                <th>[6] 기타발주</th>
+                <th>[7] 2층 냉장</th>
+                <th>[8] 2층 냉동</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>강력분</td>
+                <td>드라이레드</td>
+                <td>바닐라향오일</td>
+                <td>아마레나체리</td>
+                <td>분유뉴밀키 (20)</td>
+                <td>감자분말 {선인}</td>
+                <td>난백 (12)</td>
+                <td>또띠아</td>
+            </tr>
+            <tr>
+                <td>중력분</td>
+                <td>홍국쌀가루</td>
+                <td>레몬향오일</td>
+                <td>그랜드500</td>
+                <td>초코칩 (10)</td>
+                <td>땅콩버터 {선인}</td>
+                <td>난황 (12)</td>
+                <td>까눌레</td>
+            </tr>
+            <tr>
+                <td>박력분</td>
+                <td>흑미쌀가루</td>
+                <td>레몬쥬스</td>
+                <td>우유버터</td>
+                <td>블랙올리브 (6)</td>
+                <td>발로나코코아 {선인}</td>
+                <td>전란 (12)</td>
+                <td>에그타르트</td>
+            </tr>
+            <tr>
+                <td>크리미비트</td>
+                <td>참깨</td>
+                <td>할라피뇨</td>
+                <td>완두앙금</td>
+                <td>마요네즈스파우트팩 (4)</td>
+                <td></td>
+                <td>다크청크</td>
+                <td>냉동고구마 (2)</td>
+            </tr>
+            <tr>
+                <td>유기농통밀</td>
+                <td>통감자후레이크</td>
+                <td>칠리소스</td>
+                <td>고운앙금</td>
+                <td>사하라코인초콜릿</td>
+                <td>침밤 {누리}</td>
+                <td>레스큐어 (12)</td>
+                <td>냉동블루베리</td>
+            </tr>
+            <tr>
+                <td>크라프트브레드</td>
+                <td>발효종분말</td>
+                <td>커피엑기스</td>
+                <td>백앙금(춘설/된백)</td>
+                <td>슈가파우더</td>
+                <td>밤다이스 {누리}</td>
+                <td>롤치즈 (10)</td>
+                <td>냉동에멘탈치즈</td>
+            </tr>
+            <tr>
+                <td>파인소프트T</td>
+                <td>데코스노우</td>
+                <td>머스타드</td>
+                <td>빙수팥</td>
+                <td>옥수수전분(콘스타치)</td>
+                <td>설탕 {누리}</td>
+                <td>샤워종</td>
+                <td>냉동망고 (10)</td>
+            </tr>
+            <tr>
+                <td>세립당</td>
+                <td>황치즈분말</td>
+                <td>호박씨</td>
+                <td>칼리바우트밀크</td>
+                <td>오트밀</td>
+                <td></td>
+                <td>서브라임 (6)</td>
+                <td>크로아상</td>
+            </tr>
+            <tr>
+                <td>흑설탕</td>
+                <td>미니모카빈</td>
+                <td>호두반태</td>
+                <td>칼리바우트화이트</td>
+                <td>계피가루</td>
+                <td>탕종분 {마루비}</td>
+                <td>생지용생이스트</td>
+                <td>미니크로아상</td>
+            </tr>
+            <tr>
+                <td>빵가루</td>
+                <td>포머스올리브오일 (4)</td>
+                <td>미로와</td>
+                <td></td>
+                <td>T55</td>
+                <td>K아트레제 {마루비}</td>
+                <td>생이스트 (40)</td>
+                <td>세블락</td>
+            </tr>
+            <tr>
+                <td>맵쌀가루</td>
+                <td>보늬밤(캔) (6)</td>
+                <td>에프리코혼당</td>
+                <td></td>
+                <td>분당</td>
+                <td>우메하라오렌지컷 {마루비}</td>
+                <td>슬라이스치즈 (5)</td>
+                <td>앵커버터 (20)</td>
+            </tr>
+            <tr>
+                <td>꽃소금</td>
+                <td>피클</td>
+                <td>아몬드프라린</td>
+                <td></td>
+                <td>밀글루텐(활성글루텐)</td>
+                <td></td>
+                <td>오뗄햄</td>
+                <td>찹쌀가루 (4)</td>
+            </tr>
+            <tr>
+                <td>이스트도넛믹스</td>
+                <td>코팅다크 (B)</td>
+                <td>트리몰린</td>
+                <td></td>
+                <td>한천분말</td>
+                <td>부어스트 {미르}</td>
+                <td>참에멘탈크림치즈 (10)</td>
+                <td>산딸기퓨레 (6)</td>
+            </tr>
+            <tr>
+                <td>아바론</td>
+                <td>옥수수캔 (B)</td>
+                <td>정종</td>
+                <td></td>
+                <td>SP</td>
+                <td>슬라이드약드(콜드컷) {미르}</td>
+                <td>체다치즈 (4)</td>
+                <td>망고퓨레 (6)</td>
+            </tr>
+            <tr>
+                <td>에스키모</td>
+                <td>건조크랜베리 (B)</td>
+                <td>퓨라토스이영제</td>
+                <td></td>
+                <td>건조블루베리</td>
+                <td></td>
+                <td>피자치즈 (4)</td>
+                <td>코코넛퓨레 (6)</td>
+            </tr>
+            <tr>
+                <td>T65 tradition</td>
+                <td>화이트혼당</td>
+                <td>식용유</td>
+                <td></td>
+                <td>검은깨</td>
+                <td>건국연유 {앨리스}</td>
+                <td>크림치즈벌크 (2)</td>
+                <td>패션후르츠퓨레 (6)</td>
+            </tr>
+            <tr>
+                <td>츄러스믹스 (5)</td>
+                <td>케찹스파우트팩 (4)</td>
+                <td>물엿</td>
+                <td></td>
+                <td>해바라기씨</td>
+                <td></td>
+                <td>크림치즈소분 (5)</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>코코아파우더 (20)</td>
+                <td>딸기잼 (B)</td>
+                <td>완두베기</td>
+                <td></td>
+                <td>땅콩분태</td>
+                <td>트레하 {호수}</td>
+                <td>크림파티시에 (6)</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>요거트파우더 (12)</td>
+                <td>라텍스 XS (10)</td>
+                <td>판다크포코</td>
+                <td></td>
+                <td>피칸반태</td>
+                <td></td>
+                <td>파이마가린 (10)</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>BP (50)</td>
+                <td>라텍스 S (10)</td>
+                <td>스틱초코</td>
+                <td></td>
+                <td>통아몬드</td>
+                <td>호두분태 {보람}</td>
+                <td>콜만 (12)</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>BS</td>
+                <td>라텍스 M (10)</td>
+                <td>살딸기잼</td>
+                <td></td>
+                <td>백아몬드슬라이스</td>
+                <td></td>
+                <td>무화과</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>옥수수분말 (4)</td>
+                <td>라텍스 L (10)</td>
+                <td>행주 (10)</td>
+                <td></td>
+                <td>통헤이즐넛</td>
+                <td>스위트버터</td>
+                <td>칸디아</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>아몬드분말</td>
+                <td>아몬드슬라이스 (B)</td>
+                <td>목장갑 (10)</td>
+                <td></td>
+                <td>마카다미아4호</td>
+                <td>다크스위트체리</td>
+                <td>사워크림 (12)</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>엔지마티꼬 (10)</td>
+                <td>건포도 (B)</td>
+                <td>퐁퐁</td>
+                <td></td>
+                <td>포도씨유</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>오버나이트 (10)</td>
+                <td>부탄가스 (7)</td>
+                <td>크린콜</td>
+                <td></td>
+                <td>건조코코넛(코코넛롱)</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>크리스탈 (10)</td>
+                <td>마요네즈 1kg (B)</td>
+                <td>락스</td>
+                <td></td>
+                <td>코코아매스</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>스위트엔자임 (10)</td>
+                <td>감로자밤 (B)</td>
+                <td>가루세제</td>
+                <td></td>
+                <td>랩40</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>뉴클레오파네토네 (10)</td>
+                <td>돈지쇼트닝 (B)</td>
+                <td>양념치킨소스</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>S-500</td>
+                <td>소갈비양념</td>
+                <td>우스타소스</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>프로베이크</td>
+                <td>캔디오렌지필</td>
+                <td>미림(미향)</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>파슬리</td>
+                <td>몰트엑기스</td>
+                <td>캡사이신</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>후추</td>
+                <td>메이플시럽</td>
+                <td>녹차레진</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>슈가코트</td>
+                <td>황노루지 (4)</td>
+                <td>골드럼 (6)</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td>사양벌꿀</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script>
+        const input = document.getElementById("searchInput");
+        const result = document.getElementById("result");
+        const table = document.getElementById("itemTable");
+
+        input.addEventListener("input", () => {
+            const query = input.value.trim();
+            result.textContent = "";
+            clearHighlight();
+
+            if (!query) return;
+
+            let found = false;
+            const rows = table.querySelectorAll("tbody tr");
+
+            rows.forEach((row, rowIndex) => {
+                row.querySelectorAll("td").forEach((cell, colIndex) => {
+                    if (cell.textContent.includes(query)) {
+                        cell.classList.add("highlight");
+                        const header = table.querySelectorAll("th")[colIndex].textContent;
+                        result.textContent = `${header} ${rowIndex + 1}번째 위치`;
+                        found = true;
+                    }
+                });
+            });
+
+            if (!found) {
+                result.textContent = "일치하는 품목이 없습니다.";
+            }
+        });
+
+        function clearHighlight() {
+            table.querySelectorAll(".highlight").forEach(cell =>
+                cell.classList.remove("highlight")
+            );
+        }
+    </script>
+
+</body>
+
+</html>
