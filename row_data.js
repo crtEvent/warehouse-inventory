@@ -1282,7 +1282,7 @@ const data = [
 		"item_name" : "발로나코코아(코코아파우더N)",
 		"min_order_quantity" : "",
 		"supplier" : "선인",
-		"order_rule" : "1.5~2 박스 유지",
+		"order_rule" : "1.5~2 박스 유지, (목) 3박스",
 		"location" : "",
 		"image_path" : ""
 	},
@@ -1291,7 +1291,7 @@ const data = [
 		"item_name" : "HM",
 		"min_order_quantity" : "",
 		"supplier" : "선인",
-		"order_rule" : "6개 이상 유지",
+		"order_rule" : "6개 이상 유지, (목) 8개",
 		"location" : "",
 		"image_path" : ""
 	},
@@ -1309,7 +1309,7 @@ const data = [
 		"item_name" : "사워크림",
 		"min_order_quantity" : "",
 		"supplier" : "선인",
-		"order_rule" : "0.5박스 이하일 때 1박스 주문",
+		"order_rule" : "0.5박스 이하일 때 1박스 주문, (목) 2박스",
 		"location" : "2층 냉장",
 		"image_path" : ""
 	},
@@ -1333,10 +1333,10 @@ const data = [
 	},
 	{
 		"id" : 149,
-		"item_name" : "엑스트라드라티판버터",
+		"item_name" : "엑스트라드라이버터",
 		"min_order_quantity" : "",
 		"supplier" : "선인",
-		"order_rule" : "매주 3박스",
+		"order_rule" : "매주 3박스, (목) 4박스",
 		"location" : "",
 		"image_path" : ""
 	},
@@ -1435,7 +1435,7 @@ const data = [
 		"item_name" : "약드",
 		"min_order_quantity" : "",
 		"supplier" : "미르스타",
-		"order_rule" : "1박스 이하일 때 2박스 맞추기",
+		"order_rule" : "1박스 이하일 때 2박스 맞추기, (목) 3박스",
 		"location" : "",
 		"image_path" : ""
 	},
