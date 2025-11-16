@@ -86,6 +86,91 @@ function renderTableRows(dataArray, tbodyElement) {
         <td>${item.location}</td>
       `;
 
+    tr.dataset.name = item.item_name;
+    tr.dataset.supplier = item.supplier;
+
+    attachLongPress(tr, item, (i) => {
+      const input = prompt(`${i.item_name} 수량을 입력하세요:`);
+
+      if (input === null) return;
+
+      appendToTodaysOrderList(i, input);
+    });
+
     tbodyElement.appendChild(tr);
   });
 }
+
+function attachLongPress(element, item, callback) {
+  let pressTimer = null;
+  let isLongPress = false;
+
+  const start = () => {
+    isLongPress = false;
+
+    pressTimer = setTimeout(() => {
+      isLongPress = true;
+      callback(item);
+    }, 600);
+  };
+
+  const end = () => {
+    clearTimeout(pressTimer);
+  };
+
+  element.addEventListener("mousedown", start);
+  element.addEventListener("touchstart", start);
+
+  element.addEventListener("mouseup", end);
+  element.addEventListener("mouseleave", end);
+  element.addEventListener("touchend", end);
+}
+
+function appendToTodaysOrderList(item, number) {
+  const tr = document.createElement("tr");
+  tr.innerHTML = `
+    <td>${item.item_name}</td>
+    <td>${number}</td>
+    <td>${item.supplier}</td>
+  `;
+  document.querySelector("#todaysOrderList tbody").append(tr);
+}
+
+function copyTodaysOrderListToClipboard() {
+  const rows = document.querySelectorAll("#todaysOrderList tbody tr");
+  const grouped = {};
+
+  rows.forEach((tr) => {
+    const name = tr.children[0].textContent.trim();
+    const quantity = tr.children[1].textContent.trim();
+    const supplier = tr.children[2].textContent.trim();
+
+    if (!grouped[supplier]) grouped[supplier] = [];
+    grouped[supplier].push({ name, quantity });
+  });
+
+  let result = "";
+
+  Object.keys(grouped).forEach((supplier) => {
+    result += `[${supplier}]\n`;
+
+    grouped[supplier].forEach((item) => {
+      result += `${item.name} ${item.quantity}\n`;
+    });
+
+    result += `\n`;
+  });
+
+  navigator.clipboard.writeText(result);
+  showToast();
+}
+
+function showToast() {
+  const toast = document.getElementById("toast");
+  toast.classList.add("show");
+
+  setTimeout(() => {
+    toast.classList.remove("show");
+  }, 1200);
+}
+
