@@ -40,6 +40,8 @@ const gnfs_6 = makeSupplierData(
   [178, 179, 180, 181, 182, 183, 184, 185, 186]
 );
 
+const gnfs_7 = makeSupplierData(data, [104, 105, 23, 24, 25]);
+
 const well_1 = makeSupplierData(
   data,
   [187, 188, 189, 190, 191, 192, 193, 194, 195, 196, 114, 115, 116, 117, 118]
@@ -173,4 +175,3 @@ function showToast() {
     toast.classList.remove("show");
   }, 1200);
 }
-

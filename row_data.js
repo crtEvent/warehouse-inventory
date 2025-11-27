@@ -212,7 +212,7 @@ const data = [
 		"min_order_quantity" : "",
 		"supplier" : "지엔에프엑스",
 		"order_rule" : "2박스 이하일 때 3박스 맞추기",
-		"location" : "",
+		"location" : "선반2-A-3F",
 		"image_path" : ""
 	},
 	{
@@ -1399,7 +1399,7 @@ const data = [
 		"item_name" : "미니크로아상",
 		"min_order_quantity" : "5B",
 		"supplier" : "호수",
-		"order_rule" : "5박스 맞추기",
+		"order_rule" : "3~5박스 맞추기",
 		"location" : "2층 냉동",
 		"image_path" : ""
 	},
@@ -1408,7 +1408,7 @@ const data = [
 		"item_name" : "AOP크로아상",
 		"min_order_quantity" : "5B",
 		"supplier" : "호수",
-		"order_rule" : "20박스 맞추기",
+		"order_rule" : "15박스 맞추기",
 		"location" : "2층 냉동",
 		"image_path" : ""
 	},
