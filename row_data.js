@@ -1363,7 +1363,7 @@ const data = [
 		"item_name" : "탕종분",
 		"min_order_quantity" : "",
 		"supplier" : "마루비시",
-		"order_rule" : "",
+		"order_rule" : "10~12포 유지",
 		"location" : "중앙 파레트",
 		"image_path" : ""
 	},
@@ -1372,7 +1372,7 @@ const data = [
 		"item_name" : "K아트레제",
 		"min_order_quantity" : "",
 		"supplier" : "마루비시",
-		"order_rule" : "",
+		"order_rule" : "4~5포 유지",
 		"location" : "",
 		"image_path" : ""
 	},
@@ -1381,7 +1381,7 @@ const data = [
 		"item_name" : "우에하라오렌지컷",
 		"min_order_quantity" : "",
 		"supplier" : "마루비시",
-		"order_rule" : "",
+		"order_rule" : "1박스 유지",
 		"location" : "선반2-A-4F",
 		"image_path" : ""
 	},
@@ -1543,7 +1543,7 @@ const data = [
 		"item_name" : "생이스트",
 		"min_order_quantity" : "3B",
 		"supplier" : "지엔에프엑스",
-		"order_rule" : "",
+		"order_rule" : "4B 유지",
 		"location" : "2층 냉장",
 		"image_path" : ""
 	},
@@ -1730,7 +1730,7 @@ const data = [
 	{
 		"id" : 193,
 		"item_name" : "비프햄",
-		"min_order_quantity" : "",
+		"min_order_quantity" : "1B",
 		"supplier" : "웰푸드",
 		"order_rule" : "",
 		"location" : "2층 냉장",
@@ -1829,7 +1829,7 @@ const data = [
 	{
 		"id" : 204,
 		"item_name" : "BS",
-		"min_order_quantity" : "",
+		"min_order_quantity" : "10",
 		"supplier" : "지엔에프엑스",
 		"order_rule" : "",
 		"location" : "선반1-D-4F",
@@ -1838,7 +1838,7 @@ const data = [
 	{
 		"id" : 205,
 		"item_name" : "보늬밤페이스트",
-		"min_order_quantity" : "",
+		"min_order_quantity" : "1B",
 		"supplier" : "지엔에프엑스",
 		"order_rule" : "",
 		"location" : "",
