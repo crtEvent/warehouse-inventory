@@ -1,0 +1,2581 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>창고 발주 도우미</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 12px;
+      background: #f5f5f5;
+    }
+
+    h2 {
+      margin-top: 20px;
+    }
+
+    .day-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin: 20px 0 30px;
+    }
+
+    .day-tab {
+      text-decoration: none;
+      background-color: #f2f2f2;
+      color: #333;
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-size: 15px;
+      transition: all 0.25s ease;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .day-tab:hover {
+      background-color: #e0e0e0;
+      transform: translateY(-2px);
+    }
+
+    .day-tab.active {
+      background-color: #007bff;
+      color: white;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    .item-card.compact {
+      padding: 10px 12px;
+    }
+
+    .item-header {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+
+    .item-name {
+      font-weight: bold;
+      font-size: 15px;
+    }
+
+    .item-rule {
+      font-size: 12px;
+      color: #888;
+    }
+
+    .item-input input {
+      width: 100%;
+      font-size: 14px;
+      padding: 6px 8px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      margin-top: 12px;
+    }
+
+    /* ===== 발주표 (A4 출력 전용) ===== */
+    .order_sheet {
+      background: white;
+      width: 794px;
+      /* A4 96dpi 기준 */
+      /* min-height: 1123px; */
+      padding: 10px 0px;
+      margin: 40px auto;
+    }
+
+    .order_sheet h3 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .order_sheet table {
+      width: 90%;
+      margin: 0 auto;
+      border-collapse: collapse;
+    }
+
+    .order_sheet th,
+    .order_sheet td {
+      border: 0.5px solid #000;
+      padding: 3px 1px;
+      text-align: center;
+      font-size: 12px;
+    }
+
+    #orderSheetGnfs3 {
+      width: auto;
+      table-layout: auto;
+    }
+
+    #orderSheetGnfs3,
+    #orderSheetGnfs3 th,
+    #orderSheetGnfs3 td {
+      border: none !important;
+    }
+
+    #orderSheetGnfs3 th,
+    #orderSheetGnfs3 td {
+      text-align: left;
+    }
+
+    .yellow {
+      background: #ffff00;
+    }
+
+    .fab-container {
+      position: fixed;
+      right: 16px;
+      bottom: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      z-index: 9999;
+    }
+
+    .fab {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      border: none;
+      background: #e5e7eb;
+      /* 밝은 회색 */
+      color: #374151;
+      /* 다크 그레이 */
+      font-size: 22px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="day-tabs">
+    <a href="./index.html" class="day-tab" data-day="monday">ALL</a>
+    <a href="./monday.html" class="day-tab" data-day="monday">월요일</a>
+    <a href="./tuesday.html" class="day-tab" data-day="tuesday">화요일</a>
+    <a href="./wednesday.html" class="day-tab" data-day="wednesday">수요일</a>
+    <a href="./thursday.html" class="day-tab" data-day="thursday">목요일</a>
+    <a href="./friday.html" class="day-tab" data-day="friday">금요일</a>
+    <a href="./sunday.html" class="day-tab" data-day="sunday">일요일</a>
+    <a href="./recoder.html" class="day-tab" data-day="sunday">불출기록</a>
+    <a href="./order.html" class="day-tab active" data-day="sunday">발주</a>
+  </div>
+
+  <div id="orderInputList"></div>
+
+  <div class="order_sheet">
+    <h3>발 주 표 (지앤에프에스 1)</h3>
+    <table id="orderSheetGnfs1">
+      <thead>
+        <tr class="yellow">
+          <th>지앤에프에스재료(가루)</th>
+          <th>최소치</th>
+          <th>발주</th>
+          <th>지앤에프에스재료(박스)</th>
+          <th>최소치</th>
+          <th>발주</th>
+        </tr>
+        <tr>
+          <th>강력분</th>
+          <th>50포</th>
+          <th></th>
+          <th>완두앙금</th>
+          <th>60B</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>중력분</th>
+          <th>20포</th>
+          <th></th>
+          <th>팥빙수</th>
+          <th>10B</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>박력분</th>
+          <th>10포</th>
+          <th></th>
+          <th>춘설앙금</th>
+          <th>15B</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>설탕</th>
+          <th>30포</th>
+          <th></th>
+          <th>고운앙금</th>
+          <th>10B</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>크리미비트</th>
+          <th>2포</th>
+          <th></th>
+          <th>모나크골드럼(럼주)</th>
+          <th>2B</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>유기농통밀</th>
+          <th>2포</th>
+          <th></th>
+          <th>츄러스믹스</th>
+          <th>1B</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>크라프트브레드</th>
+          <th>2포</th>
+          <th></th>
+          <th>벌꿀</th>
+          <th>2B</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>매직믹스T</th>
+          <th>5포</th>
+          <th></th>
+          <th>아마레나체리</th>
+          <th>2B</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>세립당</th>
+          <th>2포</th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>강력쌀가루</th>
+          <th>5포</th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>흑설탕</th>
+          <th>2포</th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>빵가루</th>
+          <th>3포</th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>꽃소금</th>
+          <th>5포</th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>맵쌀가루</th>
+          <th>1포</th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>이스트도넛믹스</th>
+          <th>2포</th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+        <tr class="yellow">
+          <th>지앤에프에스재료(박스)</th>
+          <th>최소치</th>
+          <th>발주</th>
+          <th>지앤에프에스재료(낱개)</th>
+          <th>최소치</th>
+          <th>발주</th>
+        </tr>
+        <tr>
+          <th>보늬밤페이스트</th>
+          <th>1B</th>
+          <th></th>
+          <th>후추</th>
+          <th>3</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>보늬밤(국산)</th>
+          <th>1B</th>
+          <th></th>
+          <th>캔디오렌지필</th>
+          <th>5</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>피클</th>
+          <th>2B</th>
+          <th></th>
+          <th>몰트엑기스</th>
+          <th>5</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>코팅다크</th>
+          <th>5B</th>
+          <th></th>
+          <th>단풍단시럽</th>
+          <th>10</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>코코아(가림)</th>
+          <th>1B</th>
+          <th></th>
+          <th>파슬리</th>
+          <th>10</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>옥수수캔</th>
+          <th>2B</th>
+          <th></th>
+          <th>B.S</th>
+          <th>10</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>건조크랜베리</th>
+          <th>1B</th>
+          <th></th>
+          <th>참깨</th>
+          <th>10</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>B.P</th>
+          <th>2B</th>
+          <th></th>
+          <th>바닐라향오일</th>
+          <th>2</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>화이트혼당</th>
+          <th>1B</th>
+          <th></th>
+          <th>드라이이스트레드</th>
+          <th>10</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>케찹스파우트팩</th>
+          <th>1B</th>
+          <th></th>
+          <th>레몬향오일</th>
+          <th>2</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>딸기잼</th>
+          <th>1B</th>
+          <th></th>
+          <th>레몬쥬스</th>
+          <th>5</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>캔연유(375g)</th>
+          <th>10</th>
+          <th></th>
+          <th>할라피뇨</th>
+          <th>3</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>라텍스 SS</th>
+          <th>1B</th>
+          <th></th>
+          <th>칠리소스</th>
+          <th>3</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>라텍스 S</th>
+          <th>1B</th>
+          <th></th>
+          <th>커피엑기스</th>
+          <th>5</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>라텍스 M</th>
+          <th>1B</th>
+          <th></th>
+          <th>머스타드</th>
+          <th>5</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>라텍스 L</th>
+          <th>1B</th>
+          <th></th>
+          <th>황노루지</th>
+          <th>2연</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>아몬드슬라이스</th>
+          <th>2B</th>
+          <th></th>
+          <th>옥수수분말</th>
+          <th>6</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>아몬드분말</th>
+          <th>2B</th>
+          <th></th>
+          <th>매직믹스알파</th>
+          <th>3</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>건포도</th>
+          <th>2B</th>
+          <th></th>
+          <th>호박씨</th>
+          <th>5</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>S-500</th>
+          <th>5B</th>
+          <th></th>
+          <th>호두반태</th>
+          <th>5</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>부탄가스</th>
+          <th>2B</th>
+          <th></th>
+          <th>홍국쌀가루</th>
+          <th>10</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>마요네즈(1kg)</th>
+          <th>3B</th>
+          <th></th>
+          <th>미로와(유니온)</th>
+          <th>3</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>우유버터</th>
+          <th>30B</th>
+          <th></th>
+          <th>에프리코트혼당</th>
+          <th>3</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>그렌드500마가린</th>
+          <th>100B</th>
+          <th></th>
+          <th>트리몰린</th>
+          <th>2</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>돈지쇼트닝</th>
+          <th>5B</th>
+          <th></th>
+          <th>정종</th>
+          <th>4</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>감로자밤</th>
+          <th>5B</th>
+          <th></th>
+          <th>아몬드프라린</th>
+          <th>6</th>
+          <th></th>
+        </tr>
+      </thead>
+    </table>
+  </div>
+
+  <div class="order_sheet">
+    <h3>발 주 표 (지앤에프에스 2)</h3>
+    <table id="orderSheetGnfs2">
+      <thead>
+        <tr class="yellow">
+          <th>지엔에프에스재료(낱개)</th>
+          <th>최소치</th>
+          <th>발주</th>
+          <th>지엔에프에스재료(냉장)</th>
+          <th>최소치</th>
+          <th>발주</th>
+        </tr>
+        <tr>
+          <th>통감자후레이크</th>
+          <th>2</th>
+          <th></th>
+          <th>또띠아</th>
+          <th>2B</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>퓨라토스이영제</th>
+          <th>1</th>
+          <th></th>
+          <th>피자치즈</th>
+          <th>3B</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>쵸코렛다크미니모카빈</th>
+          <th>2</th>
+          <th></th>
+          <th>체다치즈</th>
+          <th>3B</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>흑미쌀가루</th>
+          <th>3</th>
+          <th></th>
+          <th>롤치즈</th>
+          <th>5B</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>발효종분말</th>
+          <th>2</th>
+          <th></th>
+          <th>슬라이스치즈</th>
+          <th>2B</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>데코스노우</th>
+          <th>2</th>
+          <th></th>
+          <th>참에멘탈크림치즈</th>
+          <th>2B</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>디어바게트</th>
+          <th>2</th>
+          <th></th>
+          <th>오뗄햄</th>
+          <th>3ea</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>황치즈분말</th>
+          <th>10</th>
+          <th></th>
+          <th>생이스트</th>
+          <th>3B</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>블루베리파우더</th>
+          <th>2</th>
+          <th></th>
+          <th>냉동생지용이스트</th>
+          <th>20</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>소갈비양념</th>
+          <th>4</th>
+          <th></th>
+          <th>다크청크</th>
+          <th>1B</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>식용유</th>
+          <th>8</th>
+          <th></th>
+          <th>콜만</th>
+          <th>2B</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>밤다이스</th>
+          <th>60</th>
+          <th></th>
+          <th>팥배기</th>
+          <th>1B</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>물엿</th>
+          <th>6</th>
+          <th></th>
+          <th>샤워종</th>
+          <th>3</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>완두배기</th>
+          <th>1</th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>판다크쵸코렛</th>
+          <th>10</th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>스틱쵸코</th>
+          <th>10</th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>산딸기잼</th>
+          <th>6</th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>포머스올리브오일</th>
+          <th>4</th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>행주</th>
+          <th>20</th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>목장갑</th>
+          <th>1타</th>
+          <th></th>
+          <th class="yellow">지엔에프에스재료(냉동)</th>
+          <th class="yellow">최소치</th>
+          <th class="yellow">발주</th>
+        </tr>
+        <tr>
+          <th>콩가루</th>
+          <th>2</th>
+          <th></th>
+          <th>냉동에멘탈치즈</th>
+          <th>1B</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>퐁퐁</th>
+          <th>2</th>
+          <th></th>
+          <th>냉동고구마</th>
+          <th>2B</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>크린콜</th>
+          <th>2</th>
+          <th></th>
+          <th>세블락</th>
+          <th>5B</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>락스</th>
+          <th>2</th>
+          <th></th>
+          <th>앵커버터</th>
+          <th>5B</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>양념치킨소스</th>
+          <th>5</th>
+          <th></th>
+          <th>찹쌀가루</th>
+          <th>6B</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>캡사이신</th>
+          <th>5</th>
+          <th></th>
+          <th>냉동블루베리</th>
+          <th>2B</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>우스타소스</th>
+          <th>5</th>
+          <th></th>
+          <th>냉동망고퓨레</th>
+          <th>2B</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>미림</th>
+          <th>5</th>
+          <th></th>
+          <th>냉동코코넛퓨레</th>
+          <th>2B</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>가루세제</th>
+          <th>5</th>
+          <th></th>
+          <th>냉동산딸기퓨레</th>
+          <th>2B</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>녹차레진</th>
+          <th>1</th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>쵸콜릿파우더</th>
+          <th>5</th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>슈가코트</th>
+          <th>5</th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+    </table>
+  </div>
+
+  <div class="order_sheet">
+    <h3>발 주 표 (지앤에프에스 3)</h3>
+    <table id="orderSheetGnfs3">
+      <thead>
+        <tr>
+          <th>엔지마티코</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>오버나이트</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>크리스탈</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>스위트엔자임</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>칼라바우트밀크</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>칼라바우트화이트</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>칩밤</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>로스팅 박력쌀가루</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>오븐클리너</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>아바론</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>에스키모</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>T65 tradition</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>요거트파우더</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>무화과</th>
+          <th></th>
+        </tr>
+      </thead>
+    </table>
+  </div>
+
+  <div class="order_sheet">
+    <h3>발 주 표 (웰푸드)</h3>
+    <table id="orderSheetWellFood">
+      <thead>
+        <tr class="yellow">
+          <th>웰푸드재료(냉장)</th>
+          <th>최소치</th>
+          <th>발주</th>
+          <th>웰푸드재료</th>
+          <th>최소치</th>
+          <th>발주</th>
+        </tr>
+        <tr>
+          <th>난백</th>
+          <th>3B</th>
+          <th></th>
+          <th>슈가파우더</th>
+          <th>10</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>난황</th>
+          <th>3B</th>
+          <th></th>
+          <th>옥수수전분</th>
+          <th>10</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>전란</th>
+          <th>4B</th>
+          <th></th>
+          <th>오트밀</th>
+          <th>5</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>서브라임</th>
+          <th>2B</th>
+          <th></th>
+          <th>계피가루</th>
+          <th>5</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>레스큐어</th>
+          <th>2B</th>
+          <th></th>
+          <th>프랑스밀(T55)</th>
+          <th>5포</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>파이마가린</th>
+          <th>5B</th>
+          <th></th>
+          <th>분당</th>
+          <th>2포</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th>건조블루베리</th>
+          <th>2</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th>밀글루텐(활성글루텐)</th>
+          <th>2</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th>한천분말</th>
+          <th>2</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th class="yellow">웰푸드재료(샌드위치)</th>
+          <th class="yellow">최소치</th>
+          <th class="yellow">발주</th>
+          <th>SP</th>
+          <th>2</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>비프햄</th>
+          <th>1B</th>
+          <th></th>
+          <th>검은깨</th>
+          <th>5</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>스모크햄</th>
+          <th>1B</th>
+          <th></th>
+          <th>해바라기씨</th>
+          <th>5</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>치킨브레스트</th>
+          <th>10</th>
+          <th></th>
+          <th>땅콩분태</th>
+          <th>5</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>에멘탈블럭</th>
+          <th>2</th>
+          <th></th>
+          <th>피칸반태</th>
+          <th>5</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th>통아몬드</th>
+          <th>5</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th>백아몬드슬라이스</th>
+          <th>5</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th>통헤이즐넛</th>
+          <th>5</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th>마카다미아4호</th>
+          <th>5</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th>포도씨유</th>
+          <th>5</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th>코코넛롱</th>
+          <th>5</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th class="yellow">웰푸드재료</th>
+          <th class="yellow">최소치</th>
+          <th class="yellow">발주</th>
+          <th>코코아매스</th>
+          <th>5</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>분유뉴밀키</th>
+          <th>2B</th>
+          <th></th>
+          <th>랩40</th>
+          <th>3</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>초코칩</th>
+          <th>1B</th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>블랙올리브</th>
+          <th>2B</th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>마요네즈스파우드팩</th>
+          <th>2B</th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>사하라코인초코렛</th>
+          <th>1B</th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+    </table>
+  </div>
+
+  <div class="fab-container">
+    <button id="resetBtn" onclick="resetOrder()" class="fab" title="초기화">↺</button>
+    <button id="downloadBtn" onclick="downloadImage()" class="fab" title="이미지 저장">🖼️</button>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+
+  <script>
+    const order_data = [
+      {
+        "id": 56,
+        "item_name": "감로자밤",
+        "supplier": "지엔",
+        "order_rule": "2박스 이하일 때 5박스 맞추기",
+        "location": "",
+        "order_cell": "#orderSheetGnfs1 tr:nth-child(43) th:nth-child(3)"
+      },
+      {
+        "id": 95,
+        "item_name": "골드럼",
+        "supplier": "지엔",
+        "order_rule": "1박스 이하일 때 2박스 맞추기 (주말 전에는 2박스 맞추기)",
+        "location": "",
+        "order_cell": "#orderSheetGnfs1 tr:nth-child(6) th:nth-child(6)"
+      },
+      {
+        "id": 99,
+        "item_name": "우유버터",
+        "supplier": "지엔",
+        "order_rule": "10박스 이하일 때 40박스 맞추기 (주말 전에는 40박스 맞추기)",
+        "location": "",
+        "order_cell": "#orderSheetGnfs1 tr:nth-child(40) th:nth-child(3)"
+      },
+      {
+        "id": 98,
+        "item_name": "그랜드 500",
+        "supplier": "지엔",
+        "order_rule": "40박스 이하일 때 100박스 맞추기 (주말 전에는 100박스 맞추기)",
+        "location": "",
+        "order_cell": "#orderSheetGnfs1 tr:nth-child(41) th:nth-child(3)"
+      },
+      {
+        "id": 107,
+        "item_name": "칩밤",
+        "supplier": "지엔",
+        "order_rule": "10개 이하일 때 40개 맞추기",
+        "location": "",
+        "order_cell": "#orderSheetGnfs3 tr:nth-child(7) th:nth-child(2)"
+      },
+      {
+        "id": 78,
+        "item_name": "식용유",
+        "supplier": "지엔",
+        "order_rule": "4개 이하일 때 8개 맞추기 (주말엔 무조건 8개 맞추기)",
+        "location": "",
+        "order_cell": "#orderSheetGnfs2 tr:nth-child(12) th:nth-child(3)"
+      },
+      {
+        "id": 106,
+        "item_name": "밤다이스",
+        "supplier": "지엔",
+        "order_rule": "6개 이하일 때 10개 발주",
+        "location": "",
+        "order_cell": "#orderSheetGnfs2 tr:nth-child(13) th:nth-child(3)"
+      },
+      {
+        "id": 62,
+        "item_name": "황노루지",
+        "supplier": "지엔",
+        "order_rule": "1연(4개) 이하일 때 2~3연 맞추기",
+        "location": "",
+        "order_cell": "#orderSheetGnfs1 tr:nth-child(33) th:nth-child(6)"
+      },
+      {
+        "id": 120,
+        "item_name": "옥수수전분(콘스타치)",
+        "supplier": "웰푸드",
+        "order_rule": "3개 이하일 때 5개 맞추기",
+        "location": "선반1-A-4F",
+        "order_cell": "#orderSheetWellFood tr:nth-child(3) th:nth-child(6)"
+      },
+      {
+        "id": 119,
+        "item_name": "슈가파우더",
+        "supplier": "웰푸드",
+        "order_rule": "3개 이하일 때 5개 맞추기",
+        "location": "선반1-A-4F",
+        "order_cell": "#orderSheetWellFood tr:nth-child(2) th:nth-child(6)"
+      },
+      {
+        "id": 21,
+        "item_name": "옥수수분말(가루)",
+        "supplier": "지엔",
+        "order_rule": "4포 이하일 때 8포 맞추기",
+        "location": "선반1-A-4F",
+        "order_cell": "#orderSheetGnfs1 tr:nth-child(34) th:nth-child(6)"
+      },
+      {
+        "id": 84,
+        "item_name": "행주",
+        "supplier": "지엔",
+        "order_rule": "5개 이하일 때 10개 시키기",
+        "location": "선반1-A-4F",
+        "order_cell": "#orderSheetGnfs2 tr:nth-child(20) th:nth-child(3)"
+      },
+      {
+        "id": 135,
+        "item_name": "헤이즐넛",
+        "supplier": "웰푸드",
+        "order_rule": "6~8개 유지 (주말 전엔 8개 맞추기)",
+        "location": "선반1-A-3F",
+        "order_cell": "#orderSheetWellFood tr:nth-child(18) th:nth-child(6)"
+      },
+      {
+        "id": 134,
+        "item_name": "백아몬드슬라이스",
+        "supplier": "웰푸드",
+        "order_rule": "2개 이하일 때 5개 맞추기 (주말 전엔 5개 맞추기)",
+        "location": "선반1-A-3F",
+        "order_cell": "#orderSheetWellFood tr:nth-child(17) th:nth-child(6)"
+      },
+      {
+        "id": 132,
+        "item_name": "피칸반태",
+        "supplier": "웰푸드",
+        "order_rule": "6~8개 유지 (주말 전엔 8개 맞추기)",
+        "location": "선반1-A-3F",
+        "order_cell": "#orderSheetWellFood tr:nth-child(15) th:nth-child(6)"
+      },
+      {
+        "id": 131,
+        "item_name": "땅콩분태",
+        "supplier": "웰푸드",
+        "order_rule": "2개 이하일 때 5개 맞추기 (주말 전엔 5개 맞추기)",
+        "location": "선반1-A-3F",
+        "order_cell": "#orderSheetWellFood tr:nth-child(14) th:nth-child(6)"
+      },
+      {
+        "id": 130,
+        "item_name": "해바라기씨",
+        "supplier": "웰푸드",
+        "order_rule": "2개 이하일 때 5개 맞추기 (주말 전엔 5개 맞추기)",
+        "location": "선반1-A-3F",
+        "order_cell": "#orderSheetWellFood tr:nth-child(13) th:nth-child(6)"
+      },
+      {
+        "id": 136,
+        "item_name": "마카다미아",
+        "supplier": "웰푸드",
+        "order_rule": "2개 이하일 때 5개 맞추기 (주말 전엔 5개 맞추기)",
+        "location": "선반1-A-3F",
+        "order_cell": "#orderSheetWellFood tr:nth-child(19) th:nth-child(6)"
+      },
+      {
+        "id": 128,
+        "item_name": "건조블루베리",
+        "supplier": "웰푸드",
+        "order_rule": "2개 이하일 때 5개 맞추기",
+        "location": "선반1-A-3F",
+        "order_cell": "#orderSheetWellFood tr:nth-child(8) th:nth-child(6)"
+      },
+      {
+        "id": 133,
+        "item_name": "통아몬드",
+        "supplier": "웰푸드",
+        "order_rule": "2개 이하일 때 5개 맞추기 (주말 전엔 5개 맞추기)",
+        "location": "선반1-A-3F",
+        "order_cell": "#orderSheetWellFood tr:nth-child(16) th:nth-child(6)"
+      },
+      {
+        "id": 70,
+        "item_name": "호박씨",
+        "supplier": "지엔",
+        "order_rule": "2개 이하일 때 5개 맞추기",
+        "location": "",
+        "order_cell": "#orderSheetGnfs1 tr:nth-child(36) th:nth-child(6)"
+      },
+      {
+        "id": 140,
+        "item_name": "랩",
+        "supplier": "웰푸드",
+        "order_rule": "2개 이하일 때 3개 맞추기",
+        "location": "선반1-A-2F",
+        "order_cell": "#orderSheetWellFood tr:nth-child(23) th:nth-child(6)"
+      },
+      {
+        "id": 79,
+        "item_name": "물엿",
+        "supplier": "지엔",
+        "order_rule": "2개 이하일 때 4개 맞추기",
+        "location": "선반1-A-2F",
+        "order_cell": "#orderSheetGnfs2 tr:nth-child(14) th:nth-child(3)"
+      },
+      {
+        "id": 115,
+        "item_name": "초코칩",
+        "supplier": "웰푸드",
+        "order_rule": "5개 이하일 때 1B 발주 (주말 전 2박스 맞추기)",
+        "location": "선반1-A-2F",
+        "order_cell": "#orderSheetWellFood tr:nth-child(24) th:nth-child(3)"
+      },
+      {
+        "id": 11,
+        "item_name": "맵쌀가루",
+        "supplier": "지엔",
+        "order_rule": "1포 이하일 때 2포 맞추기",
+        "location": "선반1-A-1F",
+        "order_cell": "#orderSheetGnfs1 tr:nth-child(15) th:nth-child(3)"
+      },
+      {
+        "id": 7,
+        "item_name": "파인소프트T",
+        "supplier": "지엔",
+        "order_rule": "2포 이하일 때 3~4포 맞추기",
+        "location": "선반1-A-1F",
+        "order_cell": "#orderSheetGnfs1 tr:nth-child(9) th:nth-child(3)"
+      },
+      {
+        "id": 5,
+        "item_name": "유기농통밀",
+        "supplier": "지엔",
+        "order_rule": "1포 이하일 때 2포 맞추기",
+        "location": "선반1-A-1F",
+        "order_cell": "#orderSheetGnfs1 tr:nth-child(7) th:nth-child(3)"
+      },
+      {
+        "id": 6,
+        "item_name": "크라프트브레드",
+        "supplier": "지엔",
+        "order_rule": "1포 이하일 때 2포 맞추기",
+        "location": "선반1-A-1F",
+        "order_cell": "#orderSheetGnfs1 tr:nth-child(8) th:nth-child(3)"
+      },
+      {
+        "id": 13,
+        "item_name": "이스트도넛믹스",
+        "supplier": "지엔",
+        "order_rule": "1포 이하일 때 2포 맞추기",
+        "location": "선반1-B-1F",
+        "order_cell": "#orderSheetGnfs1 tr:nth-child(16) th:nth-child(3)"
+      },
+      {
+        "id": 8,
+        "item_name": "세립당",
+        "supplier": "지엔",
+        "order_rule": "1포 이하일 때 2포 맞추기",
+        "location": "선반1-B-1F",
+        "order_cell": "#orderSheetGnfs1 tr:nth-child(10) th:nth-child(3)"
+      },
+      {
+        "id": 4,
+        "item_name": "크리미비트",
+        "supplier": "지엔",
+        "order_rule": "1포 이하일 때 2포 맞추기",
+        "location": "선반1-B-1F",
+        "order_cell": "#orderSheetGnfs1 tr:nth-child(6) th:nth-child(3)"
+      },
+      {
+        "id": 15,
+        "item_name": "에스키모",
+        "supplier": "지엔",
+        "order_rule": "1포 이하일 때 2포 맞추기",
+        "location": "선반1-B-1F",
+        "order_cell": "#orderSheetGnfs3 tr:nth-child(11) th:nth-child(2)"
+      },
+      {
+        "id": 137,
+        "item_name": "포도씨유",
+        "supplier": "웰푸드",
+        "order_rule": "2개 이하일 때 4개 맞추기",
+        "location": "",
+        "order_cell": "#orderSheetWellFood tr:nth-child(20) th:nth-child(6)"
+      },
+      {
+        "id": 96,
+        "item_name": "사양벌꿀",
+        "supplier": "지엔",
+        "order_rule": "5개 이하일 때 1박스 발주 (주말 전에는 16개 이상 유지)",
+        "location": "선반1-B-2F",
+        "order_cell": "#orderSheetGnfs1 tr:nth-child(8) th:nth-child(6)"
+      },
+      {
+        "id": 116,
+        "item_name": "블랙올리브",
+        "supplier": "웰푸드",
+        "order_rule": "4개 이하일 때 1박스 발주",
+        "location": "선반1-B-2F",
+        "order_cell": "#orderSheetWellFood tr:nth-child(25) th:nth-child(3)"
+      },
+      {
+        "id": 44,
+        "item_name": "보니밤",
+        "supplier": "지엔",
+        "order_rule": "5개 이하일 때 12개 맞추기",
+        "location": "선반1-B-2F",
+        "order_cell": "#orderSheetGnfs1 tr:nth-child(19) th:nth-child(3)"
+      },
+      {
+        "id": 45,
+        "item_name": "피클",
+        "supplier": "지엔",
+        "order_rule": "5개 이하일 때 1B 발주",
+        "location": "선반1-B-2F",
+        "order_cell": "#orderSheetGnfs1 tr:nth-child(20) th:nth-child(3)"
+      },
+      {
+        "id": 129,
+        "item_name": "검은깨",
+        "supplier": "웰푸드",
+        "order_rule": "4개 이하일 때 8개 맞추기",
+        "location": "선반1-B-3F",
+        "order_cell": "#orderSheetWellFood tr:nth-child(12) th:nth-child(6)"
+      },
+      {
+        "id": 121,
+        "item_name": "오트밀",
+        "supplier": "웰푸드",
+        "order_rule": "2개 이하일 때 4개 맞추기",
+        "location": "선반1-B-3F",
+        "order_cell": "#orderSheetWellFood tr:nth-child(4) th:nth-child(6)"
+      },
+      {
+        "id": 139,
+        "item_name": "코코아매스",
+        "supplier": "웰푸드",
+        "order_rule": "2개 이하일 때 3개 맞추기",
+        "location": "선반1-B-3F",
+        "order_cell": "#orderSheetWellFood tr:nth-child(22) th:nth-child(6)"
+      },
+      {
+        "id": 71,
+        "item_name": "호두반태",
+        "supplier": "지엔",
+        "order_rule": "5개 이하일 때 8개 맞추기",
+        "location": "선반1-B-3F",
+        "order_cell": "#orderSheetGnfs1 tr:nth-child(37) th:nth-child(6)"
+      },
+      {
+        "id": 64,
+        "item_name": "레몬향 오일",
+        "supplier": "지엔",
+        "order_rule": "1개 이하일 때 2개 맞추기",
+        "location": "선반1-B-4F",
+        "order_cell": "#orderSheetGnfs1 tr:nth-child(27) th:nth-child(6)"
+      },
+      {
+        "id": 63,
+        "item_name": "바닐라 향오일",
+        "supplier": "지엔",
+        "order_rule": "1개 이하일 때 2개 맞추기",
+        "location": "선반1-B-4F",
+        "order_cell": "#orderSheetGnfs1 tr:nth-child(25) th:nth-child(6)"
+      },
+      {
+        "id": 125,
+        "item_name": "밀글루텐",
+        "supplier": "웰푸드",
+        "order_rule": "2포 이하일 때 4포 맞추기",
+        "location": "선반1-B-4F",
+        "order_cell": "#orderSheetWellFood tr:nth-child(9) th:nth-child(6)"
+      },
+      {
+        "id": 17,
+        "item_name": "츄러스 믹스",
+        "supplier": "지엔",
+        "order_rule": "3개 이하일 때 5개 맞추기",
+        "location": "선반1-B-4F",
+        "order_cell": "#orderSheetGnfs1 tr:nth-child(7) th:nth-child(6)"
+      },
+      {
+        "id": 35,
+        "item_name": "흑미쌀가루",
+        "supplier": "지엔",
+        "order_rule": "2개 이하일 때 5개 맞추기",
+        "location": "선반1-B-4F",
+        "order_cell": "#orderSheetGnfs2 tr:nth-child(5) th:nth-child(3)"
+      },
+      {
+        "id": 36,
+        "item_name": "참깨",
+        "supplier": "지엔",
+        "order_rule": "5개 이하일 때 10개 맞추기",
+        "location": "선반1-C-4F",
+        "order_cell": "#orderSheetGnfs1 tr:nth-child(24) th:nth-child(6)"
+      },
+      {
+        "id": 104,
+        "item_name": "칼라바우트밀크",
+        "supplier": "지엔",
+        "order_rule": "1개 남았을 때 1개 발주",
+        "location": "선반1-C-4F",
+        "order_cell": "#orderSheetGnfs3 tr:nth-child(5) th:nth-child(2)"
+      },
+      {
+        "id": 105,
+        "item_name": "칼라바우트화이트",
+        "supplier": "지엔",
+        "order_rule": "2개 남았을 때 3개 맞추기",
+        "location": "선반1-C-4F",
+        "order_cell": "#orderSheetGnfs3 tr:nth-child(6) th:nth-child(2)"
+      },
+      {
+        "id": 19,
+        "item_name": "요거트파우더",
+        "supplier": "지엔",
+        "order_rule": "5개 이하일 때 10개 맞추기",
+        "location": "선반1-C-4F",
+        "order_cell": "#orderSheetGnfs3 tr:nth-child(13) th:nth-child(2)"
+      },
+      {
+        "id": 138,
+        "item_name": "건조코코넛",
+        "supplier": "웰푸드",
+        "order_rule": "2개 이하일 때 4개 맞추기",
+        "location": "선반1-C-3F",
+        "order_cell": "#orderSheetWellFood tr:nth-child(21) th:nth-child(6)"
+      },
+      {
+        "id": 28,
+        "item_name": "프로베이크(파인 202)",
+        "supplier": "지엔",
+        "order_rule": "2개 이하일 때 3개 맞추기",
+        "location": "선반1-C-3F",
+        "order_cell": "#orderSheetGnfs1 tr:nth-child(35) th:nth-child(6)"
+      },
+      {
+        "id": 59,
+        "item_name": "캔디오렌지필",
+        "supplier": "지엔",
+        "order_rule": "2개 이하일 때 5개 맞추기",
+        "location": "선반1-C-3F",
+        "order_cell": "#orderSheetGnfs1 tr:nth-child(19) th:nth-child(6)"
+      },
+      {
+        "id": 9,
+        "item_name": "흑설탕",
+        "supplier": "지엔",
+        "order_rule": "10포 이하일 때 1박스 시키기",
+        "location": "선반1-C-3F",
+        "order_cell": "#orderSheetGnfs1 tr:nth-child(12) th:nth-child(3)"
+      },
+      {
+        "id": 126,
+        "item_name": "한천분말",
+        "supplier": "웰푸드",
+        "order_rule": "1~2개일 때 3포 맞추기",
+        "location": "선반1-C-3F",
+        "order_cell": "#orderSheetWellFood tr:nth-child(10) th:nth-child(6)"
+      },
+      {
+        "id": 122,
+        "item_name": "계피가루",
+        "supplier": "웰푸드",
+        "order_rule": "2개 이하일 때 1개 발주",
+        "location": "선반1-C-3F",
+        "order_cell": "#orderSheetWellFood tr:nth-child(5) th:nth-child(6)"
+      },
+      {
+        "id": 80,
+        "item_name": "완두배기",
+        "supplier": "지엔",
+        "order_rule": "1개 이하일 때 2개 맞추기",
+        "location": "선반1-C-3F",
+        "order_cell": "#orderSheetGnfs2 tr:nth-child(15) th:nth-child(3)"
+      },
+      {
+        "id": 31,
+        "item_name": "후추",
+        "supplier": "지엔",
+        "order_rule": "2개 이하일 때 3개 맞추기",
+        "location": "선반1-C-3F",
+        "order_cell": "#orderSheetGnfs1 tr:nth-child(18) th:nth-child(6)"
+      },
+      {
+        "id": 82,
+        "item_name": "스틱초코",
+        "supplier": "지엔",
+        "order_rule": "5개 이하일 때 10개 맞추기",
+        "location": "선반1-C-2F",
+        "order_cell": "#orderSheetGnfs2 tr:nth-child(17) th:nth-child(3)"
+      },
+      {
+        "id": 81,
+        "item_name": "판다크초코",
+        "supplier": "지엔",
+        "order_rule": "5개 이하일 때 10개 맞추기",
+        "location": "선반1-C-2F",
+        "order_cell": "#orderSheetGnfs2 tr:nth-child(16) th:nth-child(3)"
+      },
+      {
+        "id": 60,
+        "item_name": "몰트액기스",
+        "supplier": "지엔",
+        "order_rule": "3개 이하일 때 5개 맞추기",
+        "location": "선반1-C-2F",
+        "order_cell": "#orderSheetGnfs1 tr:nth-child(20) th:nth-child(6)"
+      },
+      {
+        "id": 61,
+        "item_name": "메이플시럽",
+        "supplier": "지엔",
+        "order_rule": "3개 이하일 때 5개 맞추기",
+        "location": "선반1-C-2F",
+        "order_cell": "#orderSheetGnfs1 tr:nth-child(21) th:nth-child(6)"
+      },
+      {
+        "id": 43,
+        "item_name": "포머스올리브오일",
+        "supplier": "지엔",
+        "order_rule": "1개 이하일 때 2개 맞추기",
+        "location": "선반1-C-2F",
+        "order_cell": "#orderSheetGnfs2 tr:nth-child(19) th:nth-child(3)"
+      },
+      {
+        "id": 69,
+        "item_name": "머스터드",
+        "supplier": "지엔",
+        "order_rule": "1개 이하일 때 3개 맞추기",
+        "location": "선반1-C-2F",
+        "order_cell": "#orderSheetGnfs1 tr:nth-child(32) th:nth-child(6)"
+      },
+      {
+        "id": 55,
+        "item_name": "마요네즈 1kg",
+        "supplier": "지엔",
+        "order_rule": "1박스 이하일 때 2박스 맞추기",
+        "location": "선반1-C-1F",
+        "order_cell": "#orderSheetGnfs1 tr:nth-child(39) th:nth-child(3)"
+      },
+      {
+        "id": 117,
+        "item_name": "마요네즈스파우트팩",
+        "supplier": "웰푸드",
+        "order_rule": "1B 남았을 때 1B 발주",
+        "location": "선반1-C-1F",
+        "order_cell": "#orderSheetWellFood tr:nth-child(26) th:nth-child(3)"
+      },
+      {
+        "id": 49,
+        "item_name": "케첩스파우트팩",
+        "supplier": "지엔",
+        "order_rule": "1박스 유지, 2개 이하일 때 1박스 발주",
+        "location": "선반1-C-1F",
+        "order_cell": "#orderSheetGnfs1 tr:nth-child(27) th:nth-child(3)"
+      },
+      {
+        "id": 86,
+        "item_name": "퐁퐁",
+        "supplier": "지엔",
+        "order_rule": "1개 이하일 때 2개 맞추기",
+        "location": "선반1-D-1F",
+        "order_cell": "#orderSheetGnfs2 tr:nth-child(23) th:nth-child(3)"
+      },
+      {
+        "id": 88,
+        "item_name": "락스",
+        "supplier": "지엔",
+        "order_rule": "개 이하일 때 2~3개 맞추기",
+        "location": "선반1-D-1F",
+        "order_cell": "#orderSheetGnfs2 tr:nth-child(25) th:nth-child(3)"
+      },
+      {
+        "id": 87,
+        "item_name": "크린콜",
+        "supplier": "지엔",
+        "order_rule": "1개 이하일 때 2개 맞추기",
+        "location": "선반1-D-1F",
+        "order_cell": "#orderSheetGnfs2 tr:nth-child(24) th:nth-child(3)"
+      },
+      {
+        "id": 206,
+        "item_name": "오븐클리너",
+        "supplier": "지엔",
+        "order_rule": "",
+        "location": "",
+        "order_cell": "#orderSheetGnfs3 tr:nth-child(9) th:nth-child(2)"
+      },
+      {
+        "id": 65,
+        "item_name": "레몬주스",
+        "supplier": "지엔",
+        "order_rule": "2개 이하일 때 4개 맞추기",
+        "location": "선반1-D-2F",
+        "order_cell": "#orderSheetGnfs1 tr:nth-child(28) th:nth-child(6)"
+      },
+      {
+        "id": 93,
+        "item_name": "캡사이신",
+        "supplier": "지엔",
+        "order_rule": "1개 이하일 때 4개 맞추기",
+        "location": "선반1-D-2F",
+        "order_cell": "#orderSheetGnfs2 tr:nth-child(27) th:nth-child(3)"
+      },
+      {
+        "id": 68,
+        "item_name": "커피액기스",
+        "supplier": "지엔",
+        "order_rule": "2개 이하일 때 4개 맞추기",
+        "location": "선반1-D-2F",
+        "order_cell": "#orderSheetGnfs1 tr:nth-child(31) th:nth-child(6)"
+      },
+      {
+        "id": 92,
+        "item_name": "미림",
+        "supplier": "지엔",
+        "order_rule": "1개 이하일 때 4개 맞추기",
+        "location": "선반1-D-2F",
+        "order_cell": "#orderSheetGnfs2 tr:nth-child(29) th:nth-child(3)"
+      },
+      {
+        "id": 90,
+        "item_name": "양념치킨소스",
+        "supplier": "지엔",
+        "order_rule": "1개 이하일 때 4개 맞추기",
+        "location": "선반1-D-2F",
+        "order_cell": "#orderSheetGnfs2 tr:nth-child(26) th:nth-child(3)"
+      },
+      {
+        "id": 91,
+        "item_name": "우스타소스",
+        "supplier": "지엔",
+        "order_rule": "1개 이하일 때 4개 맞추기",
+        "location": "선반1-D-2F",
+        "order_cell": "#orderSheetGnfs2 tr:nth-child(28) th:nth-child(3)"
+      },
+      {
+        "id": 76,
+        "item_name": "정종",
+        "supplier": "지엔",
+        "order_rule": "1개 이하일 때 2개 맞추기",
+        "location": "선반1-D-2F",
+        "order_cell": "#orderSheetGnfs1 tr:nth-child(42) th:nth-child(6)"
+      },
+      {
+        "id": 66,
+        "item_name": "할라피뇨",
+        "supplier": "지엔",
+        "order_rule": "1개 이하일 때 2개 맞추기",
+        "location": "선반1-D-2F",
+        "order_cell": "#orderSheetGnfs1 tr:nth-child(29) th:nth-child(6)"
+      },
+      {
+        "id": 67,
+        "item_name": "칠리소스",
+        "supplier": "지엔",
+        "order_rule": "1개 이하일 때 2개 맞추기",
+        "location": "선반1-D-2F",
+        "order_cell": "#orderSheetGnfs1 tr:nth-child(30) th:nth-child(6)"
+      },
+      {
+        "id": 42,
+        "item_name": "미니모카빈",
+        "supplier": "지엔",
+        "order_rule": "1개 이하일 때 2개 맞추기",
+        "location": "선반1-D-3F",
+        "order_cell": "#orderSheetGnfs2 tr:nth-child(4) th:nth-child(3)"
+      },
+      {
+        "id": 94,
+        "item_name": "녹차레진",
+        "supplier": "지엔",
+        "order_rule": "1개 이하일 때 2개 맞추기",
+        "location": "선반1-D-3F",
+        "order_cell": "#orderSheetGnfs2 tr:nth-child(31) th:nth-child(3)"
+      },
+      {
+        "id": 33,
+        "item_name": "드라이레드",
+        "supplier": "지엔",
+        "order_rule": "5개 이하일 때 12개 맞추기",
+        "location": "선반1-D-3F",
+        "order_cell": "#orderSheetGnfs1 tr:nth-child(26) th:nth-child(6)"
+      },
+      {
+        "id": 40,
+        "item_name": "디어바게트",
+        "supplier": "지엔",
+        "order_rule": "1개 이하일 때 2개 맞추기",
+        "location": "선반1-D-3F",
+        "order_cell": "#orderSheetGnfs2 tr:nth-child(8) th:nth-child(3)"
+      },
+      {
+        "id": 37,
+        "item_name": "통감자후레이크",
+        "supplier": "지엔",
+        "order_rule": "1개 이하일 때 2개 맞추기",
+        "location": "선반1-D-3F",
+        "order_cell": "#orderSheetGnfs2 tr:nth-child(2) th:nth-child(3)"
+      },
+      {
+        "id": 38,
+        "item_name": "발효종분말",
+        "supplier": "지엔",
+        "order_rule": "1개 이하일 때 2개 맞추기",
+        "location": "선반1-D-3F",
+        "order_cell": "#orderSheetGnfs2 tr:nth-child(6) th:nth-child(3)"
+      },
+      {
+        "id": 18,
+        "item_name": "코코아파우더(초코릿 파우더)",
+        "supplier": "지엔",
+        "order_rule": "조정 중 (가림)",
+        "location": "선반1-D-3F",
+        "order_cell": "#orderSheetGnfs1 tr:nth-child(22) th:nth-child(3)"
+      },
+      {
+        "id": 39,
+        "item_name": "데코스노우",
+        "supplier": "지엔",
+        "order_rule": "1개 이하일 때 2개 맞추기",
+        "location": "선반1-D-3F",
+        "order_cell": "#orderSheetGnfs2 tr:nth-child(7) th:nth-child(3)"
+      },
+      {
+        "id": 41,
+        "item_name": "황치즈분말",
+        "supplier": "지엔",
+        "order_rule": "2개 이하일 때 5개 맞추기",
+        "location": "선반1-D-4F",
+        "order_cell": "#orderSheetGnfs2 tr:nth-child(9) th:nth-child(3)"
+      },
+      {
+        "id": 34,
+        "item_name": "홍국쌀가루",
+        "supplier": "지엔",
+        "order_rule": "2개 이하일 때 5개 맞추기",
+        "location": "선반1-D-4F",
+        "order_cell": "#orderSheetGnfs1 tr:nth-child(38) th:nth-child(6)"
+      },
+      {
+        "id": 204,
+        "item_name": "BS",
+        "supplier": "지엔",
+        "order_rule": "",
+        "location": "선반1-D-4F",
+        "order_cell": "#orderSheetGnfs1 tr:nth-child(23) th:nth-child(6)"
+      },
+      {
+        "id": 89,
+        "item_name": "가루세제",
+        "supplier": "지엔",
+        "order_rule": "2개 이하일 때 5개 맞추기",
+        "location": "",
+        "order_cell": "#orderSheetGnfs2 tr:nth-child(30) th:nth-child(3)"
+      },
+      {
+        "id": 114,
+        "item_name": "분유뉴밀키",
+        "supplier": "웰푸드",
+        "order_rule": "2박스 이하일 때 3박스 맞추기 (평일 5박스 유지)",
+        "location": "",
+        "order_cell": "#orderSheetWellFood tr:nth-child(23) th:nth-child(3)"
+      },
+      {
+        "id": 77,
+        "item_name": "퓨라토스이영제",
+        "supplier": "지엔",
+        "order_rule": "1개 이하일 때 2개 맞추기",
+        "location": "",
+        "order_cell": "#orderSheetGnfs2 tr:nth-child(3) th:nth-child(3)"
+      },
+      {
+        "id": 108,
+        "item_name": "로스팅 박력쌀가루",
+        "supplier": "지엔",
+        "order_rule": "지엔 발주 항목",
+        "location": "",
+        "order_cell": "#orderSheetGnfs3 tr:nth-child(8) th:nth-child(2)"
+      },
+      {
+        "id": 26,
+        "item_name": "스위트엔지임",
+        "supplier": "지엔",
+        "order_rule": "크리스마스 때 주로 사용, 반죽실 문의",
+        "location": "",
+        "order_cell": "#orderSheetGnfs3 tr:nth-child(4) th:nth-child(2)"
+      },
+      {
+        "id": 25,
+        "item_name": "크리스탈",
+        "supplier": "지엔",
+        "order_rule": "1박스 유지, 추석이나 기타 휴일 시 2박스 맞추기",
+        "location": "선반2-A-4F",
+        "order_cell": "#orderSheetGnfs3 tr:nth-child(3) th:nth-child(2)"
+      },
+      {
+        "id": 207,
+        "item_name": "라텍스장갑SS",
+        "supplier": "지엔",
+        "order_rule": "6개 이하일 때 10개 맞추기",
+        "location": "",
+        "order_cell": "#orderSheetGnfs1 tr:nth-child(30) th:nth-child(3)"
+      },
+      {
+        "id": 208,
+        "item_name": "라텍스장갑S",
+        "supplier": "지엔",
+        "order_rule": "6개 이하일 때 10개 맞추기",
+        "location": "",
+        "order_cell": "#orderSheetGnfs1 tr:nth-child(31) th:nth-child(3)"
+      },
+      {
+        "id": 209,
+        "item_name": "라텍스장갑M",
+        "supplier": "지엔",
+        "order_rule": "6개 이하일 때 10개 맞추기",
+        "location": "",
+        "order_cell": "#orderSheetGnfs1 tr:nth-child(32) th:nth-child(3)"
+      },
+      {
+        "id": 210,
+        "item_name": "라텍스장갑L",
+        "supplier": "지엔",
+        "order_rule": "6개 이하일 때 10개 맞추기",
+        "location": "",
+        "order_cell": "#orderSheetGnfs1 tr:nth-child(3) th:nth-child(3)"
+      },
+      {
+        "id": 23,
+        "item_name": "엔지마티코",
+        "supplier": "지엔",
+        "order_rule": "2박스 이하일 때 3박스 맞추기",
+        "location": "선반2-A-3F",
+        "order_cell": "#orderSheetGnfs3 tr:nth-child(1) th:nth-child(2)"
+      },
+      {
+        "id": 24,
+        "item_name": "오버나이트",
+        "supplier": "지엔",
+        "order_rule": "2박스 이하일 때 3박스 맞추기",
+        "location": "선반2-A-3F",
+        "order_cell": "#orderSheetGnfs3 tr:nth-child(2) th:nth-child(2)"
+      },
+      {
+        "id": 97,
+        "item_name": "아마레나체리",
+        "supplier": "지엔",
+        "order_rule": "2박스 맞추기",
+        "location": "선반2-A-3F",
+        "order_cell": "#orderSheetGnfs1 tr:nth-child(9) th:nth-child(6)"
+      },
+      {
+        "id": 20,
+        "item_name": "BP",
+        "supplier": "지엔",
+        "order_rule": "1박스 이하일 때 2박스 맞추기",
+        "location": "",
+        "order_cell": "#orderSheetGnfs1 tr:nth-child(25) th:nth-child(3)"
+      },
+      {
+        "id": 46,
+        "item_name": "옥수수캔",
+        "supplier": "지엔",
+        "order_rule": "1박스 이하일 때 2박스 맞추기 (0개일 때 1박스 구매 무방, 주 1회 사용)",
+        "location": "선반2-A-3F",
+        "order_cell": "#orderSheetGnfs1 tr:nth-child(23) th:nth-child(3)"
+      },
+      {
+        "id": 127,
+        "item_name": "SP",
+        "supplier": "웰푸드",
+        "order_rule": "1개 이하일 때 2개 맞추기",
+        "location": "선반2-A-4F",
+        "order_cell": "#orderSheetWellFood tr:nth-child(11) th:nth-child(6)"
+      },
+      {
+        "id": 74,
+        "item_name": "아몬드프라린",
+        "supplier": "지엔",
+        "order_rule": "2개 이하일 때 6개 맞추기",
+        "location": "선반2-A-2F",
+        "order_cell": "#orderSheetGnfs1 tr:nth-child(43) th:nth-child(6)"
+      },
+      {
+        "id": 73,
+        "item_name": "애프리코혼당",
+        "supplier": "지엔",
+        "order_rule": "2개 이하일 때 4개 맞추기",
+        "location": "선반2-A-2F",
+        "order_cell": "#orderSheetGnfs1 tr:nth-child(40) th:nth-child(6)"
+      },
+      {
+        "id": 83,
+        "item_name": "산딸기잼",
+        "supplier": "지엔",
+        "order_rule": "2개 이하일 때 4개 맞추기",
+        "location": "",
+        "order_cell": "#orderSheetGnfs2 tr:nth-child(18) th:nth-child(3)"
+      },
+      {
+        "id": 50,
+        "item_name": "딸기잼",
+        "supplier": "지엔",
+        "order_rule": "1박스 유지 (다 떨어지면 1박스 발주)",
+        "location": "",
+        "order_cell": "#orderSheetGnfs1 tr:nth-child(28) th:nth-child(3)"
+      },
+      {
+        "id": 205,
+        "item_name": "보늬밤페이스트",
+        "supplier": "지엔",
+        "order_rule": "",
+        "location": "",
+        "order_cell": "#orderSheetGnfs1 tr:nth-child(18) th:nth-child(3)"
+      },
+      {
+        "id": 72,
+        "item_name": "미로와",
+        "supplier": "지엔",
+        "order_rule": "2개 이하일 때 3개 맞추기",
+        "location": "선반2-B-4F",
+        "order_cell": "#orderSheetGnfs1 tr:nth-child(39) th:nth-child(6)"
+      },
+      {
+        "id": 75,
+        "item_name": "트리몰린",
+        "supplier": "지엔",
+        "order_rule": "1개 이하일 때 2개 맞추기",
+        "location": "선반2-B-4F",
+        "order_cell": "#orderSheetGnfs1 tr:nth-child(41) th:nth-child(6)"
+      },
+      {
+        "id": 48,
+        "item_name": "화이트혼당",
+        "supplier": "지엔",
+        "order_rule": "2박스 이하일 때 3박스 맞추기",
+        "location": "",
+        "order_cell": "#orderSheetGnfs1 tr:nth-child(26) th:nth-child(3)"
+      },
+      {
+        "id": 10,
+        "item_name": "빵가루",
+        "supplier": "지엔",
+        "order_rule": "1포 이하일 때 2포 맞추기",
+        "location": "",
+        "order_cell": "#orderSheetGnfs1 tr:nth-child(13) th:nth-child(3)"
+      },
+      {
+        "id": 85,
+        "item_name": "목장갑",
+        "supplier": "지엔",
+        "order_rule": "5개 이하일 때 10개 시키기",
+        "location": "선반2-B-4F",
+        "order_cell": "#orderSheetGnfs2 tr:nth-child(21) th:nth-child(3)"
+      },
+      {
+        "id": 47,
+        "item_name": "건조크랜베리",
+        "supplier": "지엔",
+        "order_rule": "1박스 이하일 때 2박스 맞추기",
+        "location": "선반2-B-3F",
+        "order_cell": "#orderSheetGnfs1 tr:nth-child(24) th:nth-child(3)"
+      },
+      {
+        "id": 53,
+        "item_name": "건포도",
+        "supplier": "지엔",
+        "order_rule": "1박스 이하일 때 1박스 발주",
+        "location": "선반2-B-3F",
+        "order_cell": "#orderSheetGnfs1 tr:nth-child(36) th:nth-child(3)"
+      },
+      {
+        "id": 22,
+        "item_name": "아몬드분말",
+        "supplier": "지엔",
+        "order_rule": "1박스 이하일 때 2박스 맞추기",
+        "location": "선반2-B-3F",
+        "order_cell": "#orderSheetGnfs1 tr:nth-child(35) th:nth-child(3)"
+      },
+      {
+        "id": 52,
+        "item_name": "아몬드슬라이스",
+        "supplier": "지엔",
+        "order_rule": "1박스 이하일 때 2박스 발주",
+        "location": "선반2-B-3F",
+        "order_cell": "#orderSheetGnfs1 tr:nth-child(34) th:nth-child(3)"
+      },
+      {
+        "id": 54,
+        "item_name": "부탄가스",
+        "supplier": "지엔",
+        "order_rule": "1박스 이하일 때 1박스 발주",
+        "location": "",
+        "order_cell": "#orderSheetGnfs1 tr:nth-child(38) th:nth-child(3)"
+      },
+      {
+        "id": 1,
+        "item_name": "강력분",
+        "supplier": "지엔",
+        "order_rule": "한번시킬 때 80포 맞추기 (30포 이하일 때)",
+        "location": "중앙 파레트",
+        "order_cell": "#orderSheetGnfs1 tr:nth-child(2) th:nth-child(3)"
+      },
+      {
+        "id": 2,
+        "item_name": "중력분",
+        "supplier": "지엔",
+        "order_rule": "한번시킬 때 40포 맞추기 (20포 이하일 때)",
+        "location": "중앙 파레트",
+        "order_cell": "#orderSheetGnfs1 tr:nth-child(3) th:nth-child(3)"
+      },
+      {
+        "id": 3,
+        "item_name": "박력분",
+        "supplier": "지엔",
+        "order_rule": "5포 이하일 때 10~15포 맞추기",
+        "location": "중앙 파레트",
+        "order_cell": "#orderSheetGnfs1 tr:nth-child(4) th:nth-child(3)"
+      },
+      {
+        "id": 12,
+        "item_name": "꽃소금",
+        "supplier": "지엔",
+        "order_rule": "2포 이하일 때 3포 맞추기",
+        "location": "",
+        "order_cell": "#orderSheetGnfs1 tr:nth-child(14) th:nth-child(3)"
+      },
+      {
+        "id": 118,
+        "item_name": "사하라코인초콜릿",
+        "supplier": "웰푸드",
+        "order_rule": "1개 이하일 때 1개 발주",
+        "location": "",
+        "order_cell": "#orderSheetWellFood tr:nth-child(27) th:nth-child(3)"
+      },
+      {
+        "id": 16,
+        "item_name": "T65 tradition",
+        "supplier": "지엔",
+        "order_rule": "1포 이하일 때 2포 맞추기",
+        "location": "",
+        "order_cell": "#orderSheetGnfs3 tr:nth-child(12) th:nth-child(2)"
+      },
+      {
+        "id": 32,
+        "item_name": "슈가코트",
+        "supplier": "지엔",
+        "order_rule": "크리스마스에 주로 사용, 12월에 2~3로 유지",
+        "location": "",
+        "order_cell": "#orderSheetGnfs2 tr:nth-child(33) th:nth-child(3)"
+      },
+      {
+        "id": 124,
+        "item_name": "분당",
+        "supplier": "웰푸드",
+        "order_rule": "1~2포 유지",
+        "location": "",
+        "order_cell": "#orderSheetWellFood tr:nth-child(7) th:nth-child(6)"
+      },
+      {
+        "id": 123,
+        "item_name": "T55",
+        "supplier": "웰푸드",
+        "order_rule": "2포 이하일 때 4포 맞추기 (주말 전엔 4포 맞추기)",
+        "location": "",
+        "order_cell": "#orderSheetWellFood tr:nth-child(6) th:nth-child(6)"
+      },
+      {
+        "id": 14,
+        "item_name": "아바론",
+        "supplier": "지엔",
+        "order_rule": "2포 이하일 때 3~4포 맞추기",
+        "location": "중앙 파레트",
+        "order_cell": "#orderSheetGnfs3 tr:nth-child(10) th:nth-child(2)"
+      },
+      {
+        "id": 100,
+        "item_name": "완두앙금",
+        "supplier": "지엔",
+        "order_rule": "20박스 이하일 때 60박스 맞추기",
+        "location": "",
+        "order_cell": "#orderSheetGnfs1 tr:nth-child(2) th:nth-child(6)"
+      },
+      {
+        "id": 103,
+        "item_name": "빙수팥",
+        "supplier": "지엔",
+        "order_rule": "4박스 남았을 때 6박스 발주",
+        "location": "",
+        "order_cell": "#orderSheetGnfs1 tr:nth-child(3) th:nth-child(6)"
+      },
+      {
+        "id": 102,
+        "item_name": "백앙금(춘설앙금)",
+        "supplier": "지엔",
+        "order_rule": "평일 12박스, 주말 20박스 맞추기 (6박스씩 사용, 명절·휴일 전에는 여유 있게 발주)",
+        "location": "",
+        "order_cell": "#orderSheetGnfs1 tr:nth-child(4) th:nth-child(6)"
+      },
+      {
+        "id": 101,
+        "item_name": "고운앙금",
+        "supplier": "지엔",
+        "order_rule": "5박스 이하일 때 10박스 맞추기",
+        "location": "",
+        "order_cell": "#orderSheetGnfs1 tr:nth-child(5) th:nth-child(6)"
+      },
+      {
+        "id": 57,
+        "item_name": "돈지쇼트닝",
+        "supplier": "지엔",
+        "order_rule": "1박스 이하일 때 2박스 맞추기",
+        "location": "",
+        "order_cell": "#orderSheetGnfs1 tr:nth-child(42) th:nth-child(3)"
+      },
+      {
+        "id": 58,
+        "item_name": "소갈비양념",
+        "supplier": "지엔",
+        "order_rule": "1개 이하일 때 3개 맞추기",
+        "location": "",
+        "order_cell": "#orderSheetGnfs2 tr:nth-child(11) th:nth-child(3)"
+      },
+      {
+        "id": 187,
+        "item_name": "난백",
+        "supplier": "웰푸드",
+        "order_rule": "평일 3B, 주말 4B",
+        "location": "2층 냉장",
+        "order_cell": "#orderSheetWellFood tr:nth-child(2) th:nth-child(3)"
+      },
+      {
+        "id": 188,
+        "item_name": "난황",
+        "supplier": "웰푸드",
+        "order_rule": "평일 3B, 주말 4B",
+        "location": "2층 냉장",
+        "order_cell": "#orderSheetWellFood tr:nth-child(3) th:nth-child(3)"
+      },
+      {
+        "id": 189,
+        "item_name": "전란",
+        "supplier": "웰푸드",
+        "order_rule": "평일 6B, 주말 8B",
+        "location": "2층 냉장",
+        "order_cell": "#orderSheetWellFood tr:nth-child(4) th:nth-child(3)"
+      },
+      {
+        "id": 198,
+        "item_name": "무화과",
+        "supplier": "지엔",
+        "order_rule": "적어서 발주 1~2B 유지",
+        "location": "2층 냉장",
+        "order_cell": "#orderSheetGnfs3 tr:nth-child(14) th:nth-child(2)"
+      },
+      {
+        "id": 177,
+        "item_name": "사워종",
+        "supplier": "지엔",
+        "order_rule": "3개 이상 유지",
+        "location": "2층 냉장",
+        "order_cell": "#orderSheetGnfs2 tr:nth-child(14) th:nth-child(6)"
+      },
+      {
+        "id": 173,
+        "item_name": "냉동생지용이스트",
+        "supplier": "지엔",
+        "order_rule": "5개 이하일 때 15개 맞추기",
+        "location": "2층 냉장",
+        "order_cell": "#orderSheetGnfs2 tr:nth-child(10) th:nth-child(6)"
+      },
+      {
+        "id": 172,
+        "item_name": "생이스트",
+        "supplier": "지엔",
+        "order_rule": "4B 유지",
+        "location": "2층 냉장",
+        "order_cell": "#orderSheetGnfs2 tr:nth-child(9) th:nth-child(6)"
+      },
+      {
+        "id": 192,
+        "item_name": "파이마가린",
+        "supplier": "웰푸드",
+        "order_rule": "3~4B 유지",
+        "location": "2층 냉장",
+        "order_cell": "#orderSheetWellFood tr:nth-child(7) th:nth-child(3)"
+      },
+      {
+        "id": 190,
+        "item_name": "서브라임",
+        "supplier": "웰푸드",
+        "order_rule": "1B 이상 유지",
+        "location": "2층 냉장",
+        "order_cell": "#orderSheetWellFood tr:nth-child(5) th:nth-child(3)"
+      },
+      {
+        "id": 191,
+        "item_name": "레스큐어",
+        "supplier": "웰푸드",
+        "order_rule": "1B 이상 유지",
+        "location": "2층 냉장",
+        "order_cell": "#orderSheetWellFood tr:nth-child(6) th:nth-child(3)"
+      },
+      {
+        "id": 175,
+        "item_name": "콜만",
+        "supplier": "지엔",
+        "order_rule": "2B 유지",
+        "location": "2층 냉장",
+        "order_cell": "#orderSheetGnfs2 tr:nth-child(12) th:nth-child(6)"
+      },
+      {
+        "id": 170,
+        "item_name": "참에멘탈크림치즈",
+        "supplier": "지엔",
+        "order_rule": "2개 이하일 때 2B 맞추기",
+        "location": "2층 냉장",
+        "order_cell": "#orderSheetGnfs2 tr:nth-child(7) th:nth-child(6)"
+      },
+      {
+        "id": 169,
+        "item_name": "슬라이스치즈",
+        "supplier": "지엔",
+        "order_rule": "1B 이하일 때 2B 맞추기",
+        "location": "2층 냉장",
+        "order_cell": "#orderSheetGnfs2 tr:nth-child(6) th:nth-child(6)"
+      },
+      {
+        "id": 168,
+        "item_name": "롤치즈",
+        "supplier": "지엔",
+        "order_rule": "6개 이하일 때 1B 주문",
+        "location": "2층 냉장",
+        "order_cell": "#orderSheetGnfs2 tr:nth-child(5) th:nth-child(6)"
+      },
+      {
+        "id": 167,
+        "item_name": "체다치즈",
+        "supplier": "지엔",
+        "order_rule": "1B 이하일 때 2B 맞추기",
+        "location": "2층 냉장",
+        "order_cell": "#orderSheetGnfs2 tr:nth-child(4) th:nth-child(6)"
+      },
+      {
+        "id": 166,
+        "item_name": "피자치즈",
+        "supplier": "지엔",
+        "order_rule": "1B 이하일 때 2B 맞추기",
+        "location": "2층 냉장",
+        "order_cell": "#orderSheetGnfs2 tr:nth-child(3) th:nth-child(6)"
+      },
+      {
+        "id": 171,
+        "item_name": "오뗄햄",
+        "supplier": "지엔",
+        "order_rule": "2개 이하일 때 6개 맞추기",
+        "location": "2층 냉장",
+        "order_cell": "#orderSheetGnfs2 tr:nth-child(8) th:nth-child(6)"
+      },
+      {
+        "id": 176,
+        "item_name": "팥배기",
+        "supplier": "지엔",
+        "order_rule": "",
+        "location": "2층 냉장",
+        "order_cell": "#orderSheetGnfs2 tr:nth-child(13) th:nth-child(6)"
+      },
+      {
+        "id": 174,
+        "item_name": "다크청크",
+        "supplier": "지엔",
+        "order_rule": "4층 문의",
+        "location": "2층 냉장",
+        "order_cell": "#orderSheetGnfs2 tr:nth-child(11) th:nth-child(6)"
+      },
+      {
+        "id": 165,
+        "item_name": "또띠아",
+        "supplier": "지엔",
+        "order_rule": "1B 이하일 때 2B 맞추기",
+        "location": "2층 냉동",
+        "order_cell": "#orderSheetGnfs2 tr:nth-child(2) th:nth-child(6)"
+      },
+      {
+        "id": 179,
+        "item_name": "냉고구마",
+        "supplier": "지엔",
+        "order_rule": "",
+        "location": "2층 냉동",
+        "order_cell": "#orderSheetGnfs2 tr:nth-child(23) th:nth-child(6)"
+      },
+      {
+        "id": 181,
+        "item_name": "앵커버터",
+        "supplier": "지엔",
+        "order_rule": "2B 일 때 5B 맞추기",
+        "location": "2층 냉동",
+        "order_cell": "#orderSheetGnfs2 tr:nth-child(25) th:nth-child(6)"
+      },
+      {
+        "id": 180,
+        "item_name": "세블락",
+        "supplier": "지엔",
+        "order_rule": "2B 일 때 4B 맞추기",
+        "location": "2층 냉동",
+        "order_cell": "#orderSheetGnfs2 tr:nth-child(24) th:nth-child(6)"
+      },
+      {
+        "id": 178,
+        "item_name": "냉동에멘탈치즈",
+        "supplier": "지엔",
+        "order_rule": "5개 이하일 때 5개 발주",
+        "location": "2층 냉동",
+        "order_cell": "#orderSheetGnfs2 tr:nth-child(22) th:nth-child(6)"
+      },
+      {
+        "id": 182,
+        "item_name": "찹쌀가루",
+        "supplier": "지엔",
+        "order_rule": "6B 맞추기",
+        "location": "2층 냉동",
+        "order_cell": "#orderSheetGnfs2 tr:nth-child(26) th:nth-child(6)"
+      },
+      {
+        "id": 193,
+        "item_name": "비프햄",
+        "supplier": "웰푸드",
+        "order_rule": "",
+        "location": "2층 냉장",
+        "order_cell": "#orderSheetWellFood tr:nth-child(12) th:nth-child(3)"
+      },
+      {
+        "id": 194,
+        "item_name": "스모크햄",
+        "supplier": "웰푸드",
+        "order_rule": "",
+        "location": "2층 냉장",
+        "order_cell": "#orderSheetWellFood tr:nth-child(13) th:nth-child(3)"
+      },
+      {
+        "id": 195,
+        "item_name": "치킨브레스트",
+        "supplier": "웰푸드",
+        "order_rule": "",
+        "location": "2층 냉장",
+        "order_cell": "#orderSheetWellFood tr:nth-child(14) th:nth-child(3)"
+      },
+      {
+        "id": 196,
+        "item_name": "에멘탈블럭",
+        "supplier": "웰푸드",
+        "order_rule": "",
+        "location": "2층 냉장",
+        "order_cell": "#orderSheetWellFood tr:nth-child(15) th:nth-child(3)"
+      },
+      {
+        "id": 183,
+        "item_name": "냉동블루베리",
+        "supplier": "지엔",
+        "order_rule": "4층 문의",
+        "location": "2층 냉동",
+        "order_cell": "#orderSheetGnfs2 tr:nth-child(27) th:nth-child(6)"
+      },
+      {
+        "id": 184,
+        "item_name": "냉동망고퓨레",
+        "supplier": "지엔",
+        "order_rule": "4층 문의",
+        "location": "2층 냉동",
+        "order_cell": "#orderSheetGnfs2 tr:nth-child(28) th:nth-child(6)"
+      },
+      {
+        "id": 185,
+        "item_name": "냉동코코넛퓨레",
+        "supplier": "지엔",
+        "order_rule": "4층 문의",
+        "location": "2층 냉동",
+        "order_cell": "#orderSheetGnfs2 tr:nth-child(29) th:nth-child(6)"
+      },
+      {
+        "id": 186,
+        "item_name": "냉동산딸기퓨레",
+        "supplier": "지엔",
+        "order_rule": "4층 문의",
+        "location": "2층 냉동",
+        "order_cell": "#orderSheetGnfs2 tr:nth-child(30) th:nth-child(6)"
+      }
+    ]
+
+    renderOrderInput();
+    attachInputEvent();
+    restoreInputs();
+
+    function attachInputEvent() {
+      document.addEventListener("input", (e) => {
+        const input = e.target;
+
+        if (!input.matches("input[data-order-cell]")) return;
+
+        input.value = input.value.toUpperCase();
+
+        const cell = document.querySelector(input.dataset.orderCell);
+        if (!cell) return;
+
+        cell.innerText = input.value || "";
+
+        if (input.id) {
+          localStorage.setItem(input.id, input.value);
+        }
+      });
+    }
+
+    function restoreInputs() {
+      document
+        .querySelectorAll("input[data-order-cell]")
+        .forEach((input) => {
+          if (!input.id) return;
+
+          const savedValue = localStorage.getItem(input.id);
+          if (!savedValue) return;
+
+          input.value = savedValue;
+
+          const cell = document.querySelector(input.dataset.orderCell);
+          if (cell) {
+            cell.innerText = savedValue;
+          }
+        });
+    }
+
+    function renderOrderInput() {
+      const container = document.getElementById("orderInputList");
+      container.innerHTML = order_data.map((item) => `
+    <div class="item-card compact">
+      <div class="item-header">
+        <span class="item-name">${item.item_name}</span>
+        <span class="item-rule">${item.order_rule} [${item.supplier}]</span>
+      </div>
+      <div class="item-input">
+        <input
+          id="${item.id}"
+          type="text"
+          placeholder="발주 수량"
+          data-order-cell="${item.order_cell}"
+        >
+      </div>
+    </div>
+  `).join("");
+    }
+
+    function resetOrder() {
+      const confirmed = confirm("모든 입력값을 초기화할까요?");
+      if (!confirmed) return;
+
+      document
+        .querySelectorAll("input[data-order-cell]")
+        .forEach((input) => {
+          input.value = "";
+
+          const cell = document.querySelector(input.dataset.orderCell);
+          if (cell) {
+            cell.innerText = "";
+          }
+        });
+
+      localStorage.clear();
+    }
+
+
+    function downloadImage() {
+      const time = `${Date.now()}`;
+
+      const sheet1 = document.getElementById("orderSheetGnfs1").closest(".order_sheet");
+      const sheet2 = document.getElementById("orderSheetGnfs2").closest(".order_sheet");
+      const sheet3 = document.getElementById("orderSheetGnfs3").closest(".order_sheet");
+      const sheet4 = document.getElementById("orderSheetWellFood").closest(".order_sheet");
+
+      html2canvas(sheet1, { scale: 2 }).then(canvas => {
+        const link = document.createElement("a");
+        link.download = `${time} 지엔 발주표_1.png`;
+        link.href = canvas.toDataURL("image/png");
+        link.click();
+      });
+      html2canvas(sheet2, { scale: 2 }).then(canvas => {
+        const link = document.createElement("a");
+        link.download = `${time} 지엔 발주표_2.png`;
+        link.href = canvas.toDataURL("image/png");
+        link.click();
+      });
+      html2canvas(sheet3, { scale: 2 }).then(canvas => {
+        const link = document.createElement("a");
+        link.download = `${time} 지엔 발주표_3.png`;
+        link.href = canvas.toDataURL("image/png");
+        link.click();
+      });
+      html2canvas(sheet4, { scale: 2 }).then(canvas => {
+        const link = document.createElement("a");
+        link.download = `${time} 웰푸드 발주표.png`;
+        link.href = canvas.toDataURL("image/png");
+        link.click();
+      });
+    }
+  </script>
+
+</body>
+
+</html>
