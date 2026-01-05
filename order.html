@@ -1111,8 +1111,10 @@
   </div>
 
   <div class="fab-container">
-    <button id="resetBtn" onclick="resetOrder()" class="fab" title="초기화">↺</button>
-    <button id="downloadBtn" onclick="downloadImage()" class="fab" title="이미지 저장">🖼️</button>
+    <button onclick="goToTop()" class="fab" title="위로">▲</button>
+    <button onclick="goToBottom()" class="fab" title="아래로">▼</button>
+    <button onclick="resetOrder()" class="fab" title="초기화">↺</button>
+    <button onclick="downloadImage()" class="fab" title="이미지 저장">🖼️</button>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
@@ -2608,6 +2610,20 @@
         link.download = `${time} 웰푸드 발주표.png`;
         link.href = canvas.toDataURL("image/png");
         link.click();
+      });
+    }
+
+    function goToTop() {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+    }
+
+    function goToBottom() {
+      window.scrollTo({
+        top: document.body.scrollHeight,
+        behavior: "smooth"
       });
     }
   </script>
