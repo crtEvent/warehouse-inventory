@@ -83,7 +83,7 @@
     /* ===== 발주표 (A4 출력 전용) ===== */
     .order_sheet {
       background: white;
-      width: 794px;
+      width: 600px;
       /* A4 96dpi 기준 */
       /* min-height: 1123px; */
       padding: 10px 0px;
@@ -173,6 +173,14 @@
   <div class="order_sheet">
     <h3>발 주 표 (지앤에프에스 1)</h3>
     <table id="orderSheetGnfs1">
+      <colgroup>
+        <col style="width: 20%">
+        <col style="width: 8%">
+        <col style="width: 10%">
+        <col style="width: 20%">
+        <col style="width: 8%">
+        <col style="width: 10%">
+      </colgroup>
       <thead>
         <tr class="yellow">
           <th>지앤에프에스재료(가루)</th>
@@ -525,6 +533,14 @@
   <div class="order_sheet">
     <h3>발 주 표 (지앤에프에스 2)</h3>
     <table id="orderSheetGnfs2">
+      <colgroup>
+        <col style="width: 20%">
+        <col style="width: 8%">
+        <col style="width: 10%">
+        <col style="width: 20%">
+        <col style="width: 8%">
+        <col style="width: 10%">
+      </colgroup>
       <thead>
         <tr class="yellow">
           <th>지엔에프에스재료(낱개)</th>
@@ -861,6 +877,14 @@
   <div class="order_sheet">
     <h3>발 주 표 (웰푸드)</h3>
     <table id="orderSheetWellFood">
+      <colgroup>
+        <col style="width: 20%">
+        <col style="width: 8%">
+        <col style="width: 10%">
+        <col style="width: 20%">
+        <col style="width: 8%">
+        <col style="width: 10%">
+      </colgroup>
       <thead>
         <tr class="yellow">
           <th>웰푸드재료(냉장)</th>
@@ -2544,10 +2568,10 @@
     function downloadImage() {
       const time = `${Date.now()}`;
 
-      const sheet1 = document.getElementById("orderSheetGnfs1").closest(".order_sheet");
-      const sheet2 = document.getElementById("orderSheetGnfs2").closest(".order_sheet");
-      const sheet3 = document.getElementById("orderSheetGnfs3").closest(".order_sheet");
-      const sheet4 = document.getElementById("orderSheetWellFood").closest(".order_sheet");
+      const sheet1 = document.getElementById("orderSheetGnfs1");
+      const sheet2 = document.getElementById("orderSheetGnfs2");
+      const sheet3 = document.getElementById("orderSheetGnfs3");
+      const sheet4 = document.getElementById("orderSheetWellFood");
 
       html2canvas(sheet1, { scale: 2 }).then(canvas => {
         const link = document.createElement("a");
