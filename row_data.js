@@ -1638,5 +1638,45 @@ const data = [
 		"order_rule" : "없으면 1개 발주",
 		"location" : "",
 		"order_cell" : "#orderSheetGnfs3 tr:nth-child(15) th:nth-child(2)"
-	}
+	},
+	{
+		"id" : 212,
+		"item_name" : "럼레진",
+		"supplier" : "선인",
+		"order_rule" : "",
+		"location" : "",
+		"order_cell" : ""
+	},
+	{
+		"id" : 213,
+		"item_name" : "데어리 스프레드",
+		"supplier" : "선인",
+		"order_rule" : "",
+		"location" : "",
+		"order_cell" : ""
+	},
+	{
+		"id" : 214,
+		"item_name" : "통딸기 프리져브",
+		"supplier" : "선인",
+		"order_rule" : "",
+		"location" : "",
+		"order_cell" : ""
+	},
+	{
+		"id" : 215,
+		"item_name" : "가나슈 필링",
+		"supplier" : "선인",
+		"order_rule" : "",
+		"location" : "",
+		"order_cell" : ""
+	},
+	{
+		"id" : 216,
+		"item_name" : "크림믹스 골드",
+		"supplier" : "선인",
+		"order_rule" : "",
+		"location" : "",
+		"order_cell" : ""
+	},
 ];
