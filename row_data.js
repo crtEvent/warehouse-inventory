@@ -1679,4 +1679,20 @@ const data = [
 		"location" : "",
 		"order_cell" : ""
 	},
+	{
+		"id" : 217,
+		"item_name" : "안프리쉬사워종",
+		"supplier" : "지엔",
+		"order_rule" : "1박스 유지, 주말 전에 무조건 1박스 시키기",
+		"location" : "",
+		"order_cell" : "#orderSheetGnfs3 tr:nth-child(16) th:nth-child(2)"
+	},
+	{
+		"id" : 218,
+		"item_name" : "호밀가루",
+		"supplier" : "지엔",
+		"order_rule" : "발죽실에서 요청 시 발주",
+		"location" : "",
+		"order_cell" : "#orderSheetGnfs3 tr:nth-child(17) th:nth-child(2)"
+	},
 ];
