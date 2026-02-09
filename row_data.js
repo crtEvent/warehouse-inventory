@@ -1643,7 +1643,7 @@ const data = [
 		"id" : 212,
 		"item_name" : "럼레진",
 		"supplier" : "선인",
-		"order_rule" : "",
+		"order_rule" : "한 번 시킬 때 3병 이상",
 		"location" : "",
 		"order_cell" : ""
 	},
@@ -1651,7 +1651,7 @@ const data = [
 		"id" : 213,
 		"item_name" : "데어리 스프레드",
 		"supplier" : "선인",
-		"order_rule" : "",
+		"order_rule" : "8박스 유지",
 		"location" : "",
 		"order_cell" : ""
 	},
@@ -1659,7 +1659,7 @@ const data = [
 		"id" : 214,
 		"item_name" : "통딸기 프리져브",
 		"supplier" : "선인",
-		"order_rule" : "",
+		"order_rule" : "1주일에 2박스",
 		"location" : "",
 		"order_cell" : ""
 	},
@@ -1667,7 +1667,7 @@ const data = [
 		"id" : 215,
 		"item_name" : "가나슈 필링",
 		"supplier" : "선인",
-		"order_rule" : "",
+		"order_rule" : "1박스 유지",
 		"location" : "",
 		"order_cell" : ""
 	},
@@ -1675,7 +1675,7 @@ const data = [
 		"id" : 216,
 		"item_name" : "크림믹스 골드",
 		"supplier" : "선인",
-		"order_rule" : "",
+		"order_rule" : "1박스 유지",
 		"location" : "",
 		"order_cell" : ""
 	},
@@ -1694,5 +1694,29 @@ const data = [
 		"order_rule" : "발죽실에서 요청 시 발주",
 		"location" : "",
 		"order_cell" : "#orderSheetGnfs3 tr:nth-child(17) th:nth-child(2)"
+	},
+	{
+		"id" : 219,
+		"item_name" : "크림브릴레 포션",
+		"supplier" : "선인",
+		"order_rule" : "2박스 유지",
+		"location" : "",
+		"order_cell" : ""
+	},
+	{
+		"id" : 220,
+		"item_name" : "피스타치오 레진",
+		"supplier" : "선인",
+		"order_rule" : "2박스 유지",
+		"location" : "",
+		"order_cell" : ""
+	},
+	{
+		"id" : 221,
+		"item_name" : "마롱 레진",
+		"supplier" : "선인",
+		"order_rule" : "2박스 유지",
+		"location" : "",
+		"order_cell" : ""
 	},
 ];

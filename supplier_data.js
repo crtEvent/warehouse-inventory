@@ -29,7 +29,10 @@ const noori = makeSupplierData(data, [150, 151]);
 
 const sunin = makeSupplierData(
   data,
-  [141, 142, 143, 144, 145, 146, 147, 148, 149, 197, 212, 213, 214, 215, 216]
+  [
+    141, 142, 143, 144, 145, 146, 147, 148, 149, 197, 212, 213, 214, 215, 216,
+    219, 220, 221,
+  ]
 );
 
 const hosu = makeSupplierData(data, [155, 156, 157, 158]);
