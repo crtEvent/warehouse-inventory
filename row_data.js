@@ -400,14 +400,6 @@ const data = [
 		"order_cell" : "#orderSheetGnfs1 tr:nth-child(28) th:nth-child(3)"
 	},
 	{
-		"id" : 51,
-		"item_name" : "라텍스장갑",
-		"supplier" : "지엔",
-		"order_rule" : "6개 이하일 때 10개 맞추기",
-		"location" : "",
-		"order_cell" : "#orderSheetGnfs1 tr:nth-child() th:nth-child()"
-	},
-	{
 		"id" : 52,
 		"item_name" : "아몬드슬라이스",
 		"supplier" : "지엔",
