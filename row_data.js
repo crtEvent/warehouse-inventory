@@ -411,7 +411,7 @@ const data = [
 		"id" : 53,
 		"item_name" : "건포도",
 		"supplier" : "지엔",
-		"order_rule" : "2박스 유지",
+		"order_rule" : "3박스 유지",
 		"location" : "선반2-B-3F",
 		"order_cell" : "#orderSheetGnfs1 tr:nth-child(36) th:nth-child(3)"
 	},
@@ -1193,7 +1193,7 @@ const data = [
 	},
 	{
 		"id" : 154,
-		"item_name" : "우에하라오렌지컷",
+		"item_name" : "우메하라오렌지컷",
 		"supplier" : "마루비시",
 		"order_rule" : "1박스 유지",
 		"location" : "선반2-A-4F",
@@ -1411,7 +1411,7 @@ const data = [
 		"id" : 181,
 		"item_name" : "앵커버터",
 		"supplier" : "지엔",
-		"order_rule" : "3B 일 때 6B 유지, 주말에 6B 맞추기",
+		"order_rule" : "3B 일 때 5B 유지",
 		"location" : "2층 냉동",
 		"order_cell" : "#orderSheetGnfs2 tr:nth-child(25) th:nth-child(6)"
 	},
