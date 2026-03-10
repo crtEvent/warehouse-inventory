@@ -67,7 +67,7 @@ const data = [
 		"id" : 9,
 		"item_name" : "흑설탕",
 		"supplier" : "지엔",
-		"order_rule" : "10포 이하일 때 1포 시키기",
+		"order_rule" : "10포 이하일 때 1포(16) 시키기",
 		"location" : "선반1-C-3F",
 		"order_cell" : "#orderSheetGnfs1 tr:nth-child(12) th:nth-child(3)"
 	},
@@ -123,7 +123,7 @@ const data = [
 		"id" : 16,
 		"item_name" : "T65 tradition",
 		"supplier" : "지엔",
-		"order_rule" : "1포 유지",
+		"order_rule" : "2~3포 유지",
 		"location" : "중앙 파레트",
 		"order_cell" : "#orderSheetGnfs3 tr:nth-child(12) th:nth-child(2)"
 	},
@@ -163,7 +163,7 @@ const data = [
 		"id" : 21,
 		"item_name" : "옥수수분말(가루)",
 		"supplier" : "지엔",
-		"order_rule" : "4포 이하일 때 8포 맞추기",
+		"order_rule" : "4~5포 맞추기",
 		"location" : "선반1-A-4F",
 		"order_cell" : "#orderSheetGnfs1 tr:nth-child(34) th:nth-child(6)"
 	},
@@ -219,7 +219,7 @@ const data = [
 		"id" : 28,
 		"item_name" : "프로베이크(파인 202)",
 		"supplier" : "지엔",
-		"order_rule" : "2개 이하일 때 3개 맞추기",
+		"order_rule" : "2개 유지",
 		"location" : "선반1-C-3F",
 		"order_cell" : "#orderSheetGnfs1 tr:nth-child(35) th:nth-child(6)"
 	},
@@ -339,7 +339,7 @@ const data = [
 		"id" : 43,
 		"item_name" : "포머스올리브오일",
 		"supplier" : "지엔",
-		"order_rule" : "1개 이하일 때 2개 맞추기",
+		"order_rule" : "3~4개 맞추기",
 		"location" : "선반1-C-2F",
 		"order_cell" : "#orderSheetGnfs2 tr:nth-child(19) th:nth-child(3)"
 	},
@@ -347,7 +347,7 @@ const data = [
 		"id" : 44,
 		"item_name" : "보니밤",
 		"supplier" : "지엔",
-		"order_rule" : "5개 이하일 때 12개 맞추기",
+		"order_rule" : "4개 이하일 때 1박스(6) 발주",
 		"location" : "선반1-B-2F",
 		"order_cell" : "#orderSheetGnfs1 tr:nth-child(19) th:nth-child(3)"
 	},
@@ -355,7 +355,7 @@ const data = [
 		"id" : 45,
 		"item_name" : "피클",
 		"supplier" : "지엔",
-		"order_rule" : "5개 이하일 때 1B 발주",
+		"order_rule" : "4개 이하일 때 1박스(6) 발주",
 		"location" : "선반1-B-2F",
 		"order_cell" : "#orderSheetGnfs1 tr:nth-child(20) th:nth-child(3)"
 	},
@@ -627,7 +627,7 @@ const data = [
 		"id" : 80,
 		"item_name" : "완두배기",
 		"supplier" : "지엔",
-		"order_rule" : "1개 이하일 때 2개 맞추기",
+		"order_rule" : "(X) 이제 안 씀",
 		"location" : "선반1-C-3F",
 		"order_cell" : "#orderSheetGnfs2 tr:nth-child(15) th:nth-child(3)"
 	},
@@ -883,7 +883,7 @@ const data = [
 		"id" : 115,
 		"item_name" : "초코칩",
 		"supplier" : "웰푸드",
-		"order_rule" : "5개 이하일 때 1B 발주 (주말 전 2박스 맞추기)",
+		"order_rule" : "2박스 맞추기",
 		"location" : "선반1-A-2F",
 		"order_cell" : "#orderSheetWellFood tr:nth-child(24) th:nth-child(3)"
 	},
@@ -915,7 +915,7 @@ const data = [
 		"id" : 119,
 		"item_name" : "슈가파우더",
 		"supplier" : "웰푸드",
-		"order_rule" : "3개 이하일 때 5개 맞추기",
+		"order_rule" : "3~4개 맞추기",
 		"location" : "선반1-A-4F",
 		"order_cell" : "#orderSheetWellFood tr:nth-child(2) th:nth-child(6)"
 	},
@@ -923,7 +923,7 @@ const data = [
 		"id" : 120,
 		"item_name" : "옥수수전분(콘스타치)",
 		"supplier" : "웰푸드",
-		"order_rule" : "3개 이하일 때 5개 맞추기",
+		"order_rule" : "3~4개 맞추기",
 		"location" : "선반1-A-4F",
 		"order_cell" : "#orderSheetWellFood tr:nth-child(3) th:nth-child(6)"
 	},
@@ -939,7 +939,7 @@ const data = [
 		"id" : 122,
 		"item_name" : "계피가루",
 		"supplier" : "웰푸드",
-		"order_rule" : "2개 이하일 때 1개 발주",
+		"order_rule" : "2~3개 유지",
 		"location" : "선반1-C-3F",
 		"order_cell" : "#orderSheetWellFood tr:nth-child(5) th:nth-child(6)"
 	},
@@ -963,7 +963,7 @@ const data = [
 		"id" : 125,
 		"item_name" : "밀글루텐",
 		"supplier" : "웰푸드",
-		"order_rule" : "2포 이하일 때 4포 맞추기",
+		"order_rule" : "2~3봉 맞추기",
 		"location" : "선반1-B-4F",
 		"order_cell" : "#orderSheetWellFood tr:nth-child(9) th:nth-child(6)"
 	},
@@ -1019,7 +1019,7 @@ const data = [
 		"id" : 132,
 		"item_name" : "피칸반태",
 		"supplier" : "웰푸드",
-		"order_rule" : "6~8개 유지 (주말 전엔 8개 맞추기)",
+		"order_rule" : "5~6개 유지 (주말 전엔 꼭 6개 이상 맞추기)",
 		"location" : "선반1-A-3F",
 		"order_cell" : "#orderSheetWellFood tr:nth-child(15) th:nth-child(6)"
 	},
@@ -1043,7 +1043,7 @@ const data = [
 		"id" : 135,
 		"item_name" : "헤이즐넛",
 		"supplier" : "웰푸드",
-		"order_rule" : "6~8개 유지 (주말 전엔 8개 맞추기)",
+		"order_rule" : "5~6개 유지 (주말 전엔 꼭 6개 이상 맞추기)",
 		"location" : "선반1-A-3F",
 		"order_cell" : "#orderSheetWellFood tr:nth-child(18) th:nth-child(6)"
 	},
