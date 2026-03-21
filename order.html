@@ -2541,7 +2541,7 @@
         cell.innerText = input.value || "";
 
         if (input.id) {
-          localStorage.setItem(input.id, input.value);
+          localStorage.setItem(`gw_${input.id}`, input.value);
         }
       });
     }
@@ -2552,7 +2552,7 @@
         .forEach((input) => {
           if (!input.id) return;
 
-          const savedValue = localStorage.getItem(input.id);
+          const savedValue = localStorage.getItem(`gw_${input.id}`);
           if (!savedValue) return;
 
           input.value = savedValue;
@@ -2599,7 +2599,11 @@
           }
         });
 
-      localStorage.clear();
+      Object.keys(localStorage).forEach(key => {
+        if (key.startsWith('gw_')) {
+          localStorage.removeItem(key);
+        }
+      });
     }
 
 

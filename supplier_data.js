@@ -108,6 +108,16 @@ function appendToTodaysOrderList(item, number) {
     <td>${item.supplier}</td>
   `;
   document.querySelector("#todaysOrderList tbody").append(tr);
+
+  const key = `day_${Date.now()}`;
+  localStorage.setItem(
+    key,
+    JSON.stringify({
+      item_name: item.item_name,
+      number: number,
+      supplier: item.supplier,
+    })
+  );
 }
 
 function copyTodaysOrderListToClipboard() {
@@ -147,3 +157,34 @@ function showToast() {
     toast.classList.remove("show");
   }, 1200);
 }
+
+function renderTodaysOrderList() {
+  Object.keys(localStorage).forEach((key) => {
+    if (key.startsWith("day_")) {
+      const loadedItem = JSON.parse(localStorage.getItem(key));
+
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${loadedItem.item_name}</td>
+        <td>${loadedItem.number}</td>
+        <td>${loadedItem.supplier}</td>
+      `;
+      document.querySelector("#todaysOrderList tbody").append(tr);
+    }
+  });
+}
+
+function resetOrder() {
+  const confirmed = confirm("모든 입력값을 초기화할까요?");
+  if (!confirmed) return;
+
+  Object.keys(localStorage).forEach(key => {
+    if (key.startsWith('day_')) {
+      localStorage.removeItem(key);
+    }
+  });
+
+  document.querySelector("#todaysOrderList tbody").innerHTML = "";
+}
+
+renderTodaysOrderList();
