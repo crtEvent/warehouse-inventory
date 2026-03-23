@@ -1120,9 +1120,13 @@
 
   <div class="fab-container">
     <button onclick="goToTop()" class="fab" title="위로">▲</button>
-    <button onclick="goToBottom()" class="fab" title="아래로">▼</button>
+    <!-- <button onclick="goToBottom()" class="fab" title="아래로">▼</button> -->
     <button onclick="resetOrder()" class="fab" title="초기화">↺</button>
     <button onclick="downloadImage()" class="fab" title="이미지 저장">🖼️</button>
+    <button onclick="downloadImage1()" class="fab" title="이미지 저장">1</button>
+    <button onclick="downloadImage2()" class="fab" title="이미지 저장">2</button>
+    <button onclick="downloadImage3()" class="fab" title="이미지 저장">3</button>
+    <button onclick="downloadImage4()" class="fab" title="이미지 저장">4</button>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
@@ -2633,6 +2637,50 @@
         link.href = canvas.toDataURL("image/png");
         link.click();
       });
+      html2canvas(sheet4, { scale: 2 }).then(canvas => {
+        const link = document.createElement("a");
+        link.download = `${time} 웰푸드 발주표.png`;
+        link.href = canvas.toDataURL("image/png");
+        link.click();
+      });
+    }
+
+    function downloadImage1() {
+      const time = `${Date.now()}`;
+      const sheet1 = document.getElementById("orderSheetGnfs1");
+      html2canvas(sheet1, { scale: 2 }).then(canvas => {
+        const link = document.createElement("a");
+        link.download = `${time} 지엔 발주표_1.png`;
+        link.href = canvas.toDataURL("image/png");
+        link.click();
+      });
+    }
+
+    function downloadImage2() {
+      const time = `${Date.now()}`;
+      const sheet2 = document.getElementById("orderSheetGnfs2");
+      html2canvas(sheet2, { scale: 2 }).then(canvas => {
+        const link = document.createElement("a");
+        link.download = `${time} 지엔 발주표_2.png`;
+        link.href = canvas.toDataURL("image/png");
+        link.click();
+      });
+    }
+
+    function downloadImage3() {
+      const time = `${Date.now()}`;
+      const sheet3 = document.getElementById("orderSheetGnfs3");
+      html2canvas(sheet3, { scale: 2 }).then(canvas => {
+        const link = document.createElement("a");
+        link.download = `${time} 지엔 발주표_3.png`;
+        link.href = canvas.toDataURL("image/png");
+        link.click();
+      });
+    }
+
+    function downloadImage4() {
+      const time = `${Date.now()}`;
+      const sheet4 = document.getElementById("orderSheetWellFood");
       html2canvas(sheet4, { scale: 2 }).then(canvas => {
         const link = document.createElement("a");
         link.download = `${time} 웰푸드 발주표.png`;
