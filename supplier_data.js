@@ -30,8 +30,8 @@ const noori = makeSupplierData(data, [150, 151]);
 const sunin = makeSupplierData(
   data,
   [
-    141, 142, 143, 144, 145, 146, 147, 148, 149, 197, 212, 213, 214, 215, 216,
-    219, 220, 221,
+    141, 142, 143, 144, 148, 145, 146, 147, 149, 197, 212, 213, 214, 215, 216,
+    219, 225, 228, 220, 221
   ]
 );
 
@@ -43,7 +43,7 @@ const alice = makeSupplierData(data, [161, 162, 163]);
 
 const mirstar = makeSupplierData(data, [159, 160]);
 
-const marubishi = makeSupplierData(data, [152, 153, 154]);
+const marubishi = makeSupplierData(data, [152, 153, 154, 231, 232]);
 
 const cannele = makeSupplierData(data, [199]);
 

@@ -1211,7 +1211,7 @@ const data = [
 		"id" : 156,
 		"item_name" : "미니크로아상",
 		"supplier" : "호수",
-		"order_rule" : "3~5박스 맞추기",
+		"order_rule" : "11박스 맞추기",
 		"location" : "2층 냉동",
 		"order_cell" : null
 	},
@@ -1219,7 +1219,7 @@ const data = [
 		"id" : 157,
 		"item_name" : "AOP크로아상",
 		"supplier" : "호수",
-		"order_rule" : "15박스 맞추기",
+		"order_rule" : "12박스 맞추기",
 		"location" : "2층 냉동",
 		"order_cell" : null
 	},
@@ -1641,7 +1641,7 @@ const data = [
 	},
 	{
 		"id" : 213,
-		"item_name" : "데어리 스프레드",
+		"item_name" : "데어리 스프레드(락틱버터)",
 		"supplier" : "선인",
 		"order_rule" : "8박스 유지",
 		"location" : "",
@@ -1651,7 +1651,7 @@ const data = [
 		"id" : 214,
 		"item_name" : "통딸기 프리져브",
 		"supplier" : "선인",
-		"order_rule" : "1주일에 2박스",
+		"order_rule" : "(겨울)1주일에 2박스, (평소)낱개 3개 유지",
 		"location" : "",
 		"order_cell" : ""
 	},
@@ -1659,7 +1659,7 @@ const data = [
 		"id" : 215,
 		"item_name" : "가나슈 필링",
 		"supplier" : "선인",
-		"order_rule" : "1박스 유지",
+		"order_rule" : "(X) 안 씀",
 		"location" : "",
 		"order_cell" : ""
 	},
@@ -1708,6 +1708,94 @@ const data = [
 		"item_name" : "마롱 레진",
 		"supplier" : "선인",
 		"order_rule" : "2박스 유지",
+		"location" : "",
+		"order_cell" : ""
+	},
+	{
+		"id" : 222,
+		"item_name" : "그린올리브",
+		"supplier" : "지엔",
+		"order_rule" : "6개 유지",
+		"location" : "",
+		"order_cell" : "#orderSheetGnfs3 tr:nth-child(18) th:nth-child(2)"
+	},
+	{
+		"id" : 223,
+		"item_name" : "선드라이토마토",
+		"supplier" : "지엔",
+		"order_rule" : "6개 유지",
+		"location" : "",
+		"order_cell" : "#orderSheetGnfs3 tr:nth-child(19) th:nth-child(2)"
+	},
+	{
+		"id" : 224,
+		"item_name" : "체다롤치즈",
+		"supplier" : "지엔",
+		"order_rule" : "6개 유지",
+		"location" : "",
+		"order_cell" : "#orderSheetGnfs3 tr:nth-child(20) th:nth-child(2)"
+	},
+	{
+		"id" : 225,
+		"item_name" : "냉동시금치",
+		"supplier" : "선인",
+		"order_rule" : "4개 유지",
+		"location" : "",
+		"order_cell" : ""
+	},
+	{
+		"id" : 226,
+		"item_name" : "건조오레가노",
+		"supplier" : "지엔",
+		"order_rule" : "발죽실에서 요청 시 발주",
+		"location" : "",
+		"order_cell" : ""
+	},
+	{
+		"id" : 227,
+		"item_name" : "홀그레이머스타드",
+		"supplier" : "지엔",
+		"order_rule" : "발죽실에서 요청 시 발주",
+		"location" : "",
+		"order_cell" : ""
+	},
+	{
+		"id" : 228,
+		"item_name" : "바질페스토",
+		"supplier" : "선인",
+		"order_rule" : "발죽실에서 요청 시 발주",
+		"location" : "",
+		"order_cell" : ""
+	},
+	{
+		"id" : 229,
+		"item_name" : "캐슈넛",
+		"supplier" : "지엔",
+		"order_rule" : "3개 유지",
+		"location" : "",
+		"order_cell" : "#orderSheetGnfs3 tr:nth-child(21) th:nth-child(2)"
+	},
+	{
+		"id" : 230,
+		"item_name" : "건조푸룬(자두)",
+		"supplier" : "지엔",
+		"order_rule" : "3개 유지",
+		"location" : "",
+		"order_cell" : "#orderSheetGnfs3 tr:nth-child(22) th:nth-child(2)"
+	},
+	{
+		"id" : 231,
+		"item_name" : "K브레소레이유",
+		"supplier" : "마루비시",
+		"order_rule" : "3포 유지",
+		"location" : "",
+		"order_cell" : ""
+	},
+	{
+		"id" : 232,
+		"item_name" : "BF-15",
+		"supplier" : "마루비시",
+		"order_rule" : "1포 유지",
 		"location" : "",
 		"order_cell" : ""
 	},
