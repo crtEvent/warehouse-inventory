@@ -1483,7 +1483,7 @@ const data = [
 		"id" : 190,
 		"item_name" : "서브라임",
 		"supplier" : "웰푸드",
-		"order_rule" : "2B 이상 유지",
+		"order_rule" : "(X) 이제 안 씀",
 		"location" : "2층 냉장",
 		"order_cell" : "#orderSheetWellFood tr:nth-child(5) th:nth-child(3)"
 	},
@@ -1491,7 +1491,7 @@ const data = [
 		"id" : 191,
 		"item_name" : "레스큐어",
 		"supplier" : "웰푸드",
-		"order_rule" : "2B 이상 유지",
+		"order_rule" : "(X) 이제 안 씀",
 		"location" : "2층 냉장",
 		"order_cell" : "#orderSheetWellFood tr:nth-child(6) th:nth-child(3)"
 	},
@@ -1773,7 +1773,7 @@ const data = [
 		"supplier" : "지엔",
 		"order_rule" : "3개 유지",
 		"location" : "",
-		"order_cell" : "#orderSheetGnfs3 tr:nth-child(21) th:nth-child(2)"
+		"서rder_cell" : "#orderSheetGnfs3 tr:nth-child(21) th:nth-child(2)"
 	},
 	{
 		"id" : 230,
