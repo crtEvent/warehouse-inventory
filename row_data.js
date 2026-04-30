@@ -1773,7 +1773,7 @@ const data = [
 		"supplier" : "지엔",
 		"order_rule" : "3개 유지",
 		"location" : "",
-		"서rder_cell" : "#orderSheetGnfs3 tr:nth-child(21) th:nth-child(2)"
+		"order_rule" : "#orderSheetGnfs3 tr:nth-child(21) th:nth-child(2)"
 	},
 	{
 		"id" : 230,
