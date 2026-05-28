@@ -931,7 +931,7 @@ const data = [
 		"id" : 121,
 		"item_name" : "오트밀",
 		"supplier" : "웰푸드",
-		"order_rule" : "2개 유지",
+		"order_rule" : "(x) 이제 안 씀",
 		"location" : "선반1-B-3F",
 		"order_cell" : "#orderSheetWellFood tr:nth-child(4) th:nth-child(6)"
 	},
@@ -1089,7 +1089,7 @@ const data = [
 	},
 	{
 		"id" : 141,
-		"item_name" : "감자분말",
+		"item_name" : "감자분말(1kg)",
 		"supplier" : "선인",
 		"order_rule" : "1박스 이하일 때 1박스 주문",
 		"location" : "선반1-A-2F",
@@ -1105,7 +1105,7 @@ const data = [
 	},
 	{
 		"id" : 143,
-		"item_name" : "발로나코코아(코코아파우더N)",
+		"item_name" : "발로나코코아(코코아파우더22%(N))",
 		"supplier" : "선인",
 		"order_rule" : "1.5~2 박스 유지, (목) 3박스",
 		"location" : "",
@@ -1113,7 +1113,7 @@ const data = [
 	},
 	{
 		"id" : 144,
-		"item_name" : "HM",
+		"item_name" : "개량제HM 10kg",
 		"supplier" : "선인",
 		"order_rule" : "6개 이상 유지, (목) 8개",
 		"location" : "",
@@ -1129,7 +1129,7 @@ const data = [
 	},
 	{
 		"id" : 146,
-		"item_name" : "사워크림",
+		"item_name" : "사워크림LP 1kg",
 		"supplier" : "선인",
 		"order_rule" : "0.5박스 이하일 때 1박스 주문, (목) 2박스",
 		"location" : "2층 냉장",
@@ -1137,15 +1137,15 @@ const data = [
 	},
 	{
 		"id" : 147,
-		"item_name" : "칸디아",
+		"item_name" : "칸디아뷰러드브리타니",
 		"supplier" : "선인",
-		"order_rule" : "5박스 유지",
+		"order_rule" : "(x) 이제 안 씀",
 		"location" : "2층 냉장",
 		"order_cell" : null
 	},
 	{
 		"id" : 148,
-		"item_name" : "헤이즐넛프라리노사",
+		"item_name" : "헤이즐넛프라리노사W 800g",
 		"supplier" : "선인",
 		"order_rule" : "2~4통 유지 (모르면 4 층에 문의)",
 		"location" : "",
@@ -1633,7 +1633,7 @@ const data = [
 	},
 	{
 		"id" : 212,
-		"item_name" : "럼레진",
+		"item_name" : "럼레진(680g)",
 		"supplier" : "선인",
 		"order_rule" : "한 번 시킬 때 3병 이상",
 		"location" : "",
@@ -1649,7 +1649,7 @@ const data = [
 	},
 	{
 		"id" : 214,
-		"item_name" : "통딸기 프리져브",
+		"item_name" : "통딸기프리저브(3kg)",
 		"supplier" : "선인",
 		"order_rule" : "(겨울)1주일에 2박스, (평소)낱개 3개 유지",
 		"location" : "",
@@ -1657,15 +1657,15 @@ const data = [
 	},
 	{
 		"id" : 215,
-		"item_name" : "가나슈 필링",
+		"item_name" : "가나슈필링 1kg",
 		"supplier" : "선인",
-		"order_rule" : "(X) 안 씀",
+		"order_rule" : "2~3개 남으면 발주",
 		"location" : "",
 		"order_cell" : ""
 	},
 	{
 		"id" : 216,
-		"item_name" : "크림믹스 골드",
+		"item_name" : "크림믹스골드(1kg)",
 		"supplier" : "선인",
 		"order_rule" : "1박스 유지",
 		"location" : "",
@@ -1689,7 +1689,7 @@ const data = [
 	},
 	{
 		"id" : 219,
-		"item_name" : "크림브릴레 포션",
+		"item_name" : "크림브륄레포션(3개입)",
 		"supplier" : "선인",
 		"order_rule" : "2박스 유지",
 		"location" : "",
@@ -1737,7 +1737,7 @@ const data = [
 	},
 	{
 		"id" : 225,
-		"item_name" : "냉동시금치",
+		"item_name" : "냉동시금치(밀포위시금치)",
 		"supplier" : "선인",
 		"order_rule" : "4개 유지",
 		"location" : "",
@@ -1799,4 +1799,12 @@ const data = [
 		"location" : "",
 		"order_cell" : ""
 	},
+	{
+		"id" : 233,
+		"item_name" : "세미드라이이스트",
+		"supplier" : "지엔",
+		"order_rule" : "3개 유지",
+		"location" : "2층 냉동",
+		"order_cell" : "#orderSheetGnfs3 tr:nth-child(23) th:nth-child(2)"
+	}
 ];
