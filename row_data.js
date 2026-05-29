@@ -1097,7 +1097,7 @@ const data = [
 	},
 	{
 		"id" : 142,
-		"item_name" : "땅콩버터",
+		"item_name" : "크리미땅콩버터(팩)",
 		"supplier" : "선인",
 		"order_rule" : "매주 4~6박스 (6박스 유지)",
 		"location" : "",
@@ -1499,7 +1499,7 @@ const data = [
 		"id" : 192,
 		"item_name" : "파이마가린",
 		"supplier" : "웰푸드",
-		"order_rule" : "3~4B 유지",
+		"order_rule" : "1~2B 유지",
 		"location" : "2층 냉장",
 		"order_cell" : "#orderSheetWellFood tr:nth-child(7) th:nth-child(3)"
 	},
@@ -1641,7 +1641,7 @@ const data = [
 	},
 	{
 		"id" : 213,
-		"item_name" : "데어리 스프레드(락틱버터)",
+		"item_name" : "데어리스프레드SI 10kg",
 		"supplier" : "선인",
 		"order_rule" : "8박스 유지",
 		"location" : "",
