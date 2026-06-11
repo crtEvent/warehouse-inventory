@@ -947,7 +947,7 @@ const data = [
 		"id" : 123,
 		"item_name" : "T55",
 		"supplier" : "웰푸드",
-		"order_rule" : "2포 이하일 때 4포 맞추기 (주말 전엔 4포 맞추기)",
+		"order_rule" : "6~7포 맞추기",
 		"location" : "중앙 파레트",
 		"order_cell" : "#orderSheetWellFood tr:nth-child(6) th:nth-child(6)"
 	},
@@ -1347,7 +1347,7 @@ const data = [
 		"id" : 173,
 		"item_name" : "냉동생지용이스트",
 		"supplier" : "지엔",
-		"order_rule" : "5개 이하일 때 12개 맞추기",
+		"order_rule" : "2~3개 맞추기",
 		"location" : "2층 냉장",
 		"order_cell" : "#orderSheetGnfs2 tr:nth-child(10) th:nth-child(6)"
 	},
