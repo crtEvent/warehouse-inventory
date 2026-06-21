@@ -1144,14 +1144,6 @@ const data = [
 		"order_cell" : null
 	},
 	{
-		"id" : 148,
-		"item_name" : "헤이즐넛프라리노사W 800g",
-		"supplier" : "선인",
-		"order_rule" : "2~4통 유지 (모르면 4 층에 문의)",
-		"location" : "",
-		"order_cell" : null
-	},
-	{
 		"id" : 149,
 		"item_name" : "엑스트라드라이버터",
 		"supplier" : "선인",
@@ -1211,7 +1203,7 @@ const data = [
 		"id" : 156,
 		"item_name" : "미니크로아상",
 		"supplier" : "호수",
-		"order_rule" : "11박스 맞추기",
+		"order_rule" : "10박스 맞추기",
 		"location" : "2층 냉동",
 		"order_cell" : null
 	},
@@ -1219,7 +1211,7 @@ const data = [
 		"id" : 157,
 		"item_name" : "AOP크로아상",
 		"supplier" : "호수",
-		"order_rule" : "12박스 맞추기",
+		"order_rule" : "10박스 맞추기",
 		"location" : "2층 냉동",
 		"order_cell" : null
 	},
@@ -1315,7 +1307,7 @@ const data = [
 		"id" : 169,
 		"item_name" : "슬라이스치즈",
 		"supplier" : "지엔",
-		"order_rule" : "4개 이하일 때 2B 맞추기",
+		"order_rule" : "(X) 이제 안 씀",
 		"location" : "2층 냉장",
 		"order_cell" : "#orderSheetGnfs2 tr:nth-child(6) th:nth-child(6)"
 	},
@@ -1459,7 +1451,7 @@ const data = [
 		"id" : 187,
 		"item_name" : "난백",
 		"supplier" : "웰푸드",
-		"order_rule" : "평일 3B, 주말 4B",
+		"order_rule" : "평일 2B, 주말 3B",
 		"location" : "2층 냉장",
 		"order_cell" : "#orderSheetWellFood tr:nth-child(2) th:nth-child(3)"
 	},
@@ -1675,7 +1667,7 @@ const data = [
 		"id" : 217,
 		"item_name" : "안프리쉬사워종",
 		"supplier" : "지엔",
-		"order_rule" : "1박스 유지, 주말 전에 무조건 1박스 시키기",
+		"order_rule" : "1박스 유지",
 		"location" : "",
 		"order_cell" : "#orderSheetGnfs3 tr:nth-child(16) th:nth-child(2)"
 	},
@@ -1773,7 +1765,7 @@ const data = [
 		"supplier" : "지엔",
 		"order_rule" : "3개 유지",
 		"location" : "",
-		"order_rule" : "#orderSheetGnfs3 tr:nth-child(21) th:nth-child(2)"
+		"order_cell" : "#orderSheetGnfs3 tr:nth-child(21) th:nth-child(2)"
 	},
 	{
 		"id" : 230,
@@ -1801,10 +1793,34 @@ const data = [
 	},
 	{
 		"id" : 233,
-		"item_name" : "세미드라이이스트",
+		"item_name" : "세미드라이이스트 레드",
 		"supplier" : "지엔",
 		"order_rule" : "3개 유지",
 		"location" : "2층 냉동",
 		"order_cell" : "#orderSheetGnfs3 tr:nth-child(23) th:nth-child(2)"
-	}
+	},
+	{
+		"id" : 234,
+		"item_name" : "세미드라이이스트 골드",
+		"supplier" : "지엔",
+		"order_rule" : "아직 모름",
+		"location" : "2층 냉동",
+		"order_cell" : "#orderSheetGnfs3 tr:nth-child(24) th:nth-child(2)"
+	},
+	{
+		"id" : 235,
+		"item_name" : "앵커 슬라이스 치즈",
+		"supplier" : "지엔",
+		"order_rule" : "1B 유지",
+		"location" : "2층 냉장",
+		"order_cell" : "#orderSheetGnfs3 tr:nth-child(25) th:nth-child(2)"
+	},
+	{
+		"id" : 236,
+		"item_name" : "무화과",
+		"supplier" : "코디상사",
+		"order_rule" : "1~2B 유지 (한 번 시킬 때 2박스 시킴)",
+		"location" : "2층 냉장",
+		"order_cell" : ""
+	},
 ];

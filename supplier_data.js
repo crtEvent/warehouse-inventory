@@ -30,7 +30,7 @@ const noori = makeSupplierData(data, [150, 151]);
 const sunin = makeSupplierData(
   data,
   [
-    141, 142, 143, 144, 148, 145, 146, 147, 149, 197, 212, 213, 214, 215, 216,
+    141, 142, 143, 144, 145, 146, 147, 149, 197, 212, 213, 214, 215, 216,
     219, 225, 228, 220, 221
   ]
 );
@@ -48,6 +48,8 @@ const marubishi = makeSupplierData(data, [152, 153, 154, 231, 232]);
 const cannele = makeSupplierData(data, [199]);
 
 const eggtart = makeSupplierData(data, [200]);
+
+const codi = makeSupplierData(data, [236]);
 
 function renderTableRows(dataArray, tbodyElement) {
   dataArray.forEach((item) => {
