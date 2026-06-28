@@ -121,9 +121,9 @@ const data = [
 	},
 	{
 		"id" : 16,
-		"item_name" : "T65 tradition",
+		"item_name" : "아뺑드 T65",
 		"supplier" : "지엔",
-		"order_rule" : "2~3포 유지",
+		"order_rule" : "3포 유지",
 		"location" : "중앙 파레트",
 		"order_cell" : "#orderSheetGnfs3 tr:nth-child(12) th:nth-child(2)"
 	},
@@ -1019,7 +1019,7 @@ const data = [
 		"id" : 132,
 		"item_name" : "피칸반태",
 		"supplier" : "웰푸드",
-		"order_rule" : "5~6개 유지 (주말 전엔 꼭 6개 이상 맞추기)",
+		"order_rule" : "2~3개 유지",
 		"location" : "선반1-A-3F",
 		"order_cell" : "#orderSheetWellFood tr:nth-child(15) th:nth-child(6)"
 	},
@@ -1211,7 +1211,7 @@ const data = [
 		"id" : 157,
 		"item_name" : "AOP크로아상",
 		"supplier" : "호수",
-		"order_rule" : "10박스 맞추기",
+		"order_rule" : "11박스 맞추기",
 		"location" : "2층 냉동",
 		"order_cell" : null
 	},
@@ -1243,7 +1243,7 @@ const data = [
 		"id" : 161,
 		"item_name" : "연유",
 		"supplier" : "앨리스",
-		"order_rule" : "5박스 이하일 때 10박스 맞추기",
+		"order_rule" : "5박스 이하일 때 12박스 맞추기",
 		"location" : "",
 		"order_cell" : null
 	},
@@ -1251,7 +1251,7 @@ const data = [
 		"id" : 162,
 		"item_name" : "크림치즈벌크",
 		"supplier" : "앨리스",
-		"order_rule" : "5박스 이하일 때 10박스 맞추기",
+		"order_rule" : "금요일에 15박스 맞추기",
 		"location" : "2층 냉장",
 		"order_cell" : null
 	},
@@ -1675,7 +1675,7 @@ const data = [
 		"id" : 218,
 		"item_name" : "호밀가루",
 		"supplier" : "지엔",
-		"order_rule" : "발죽실에서 요청 시 발주",
+		"order_rule" : "1B 유지",
 		"location" : "",
 		"order_cell" : "#orderSheetGnfs3 tr:nth-child(17) th:nth-child(2)"
 	},
@@ -1822,5 +1822,13 @@ const data = [
 		"order_rule" : "1~2B 유지 (한 번 시킬 때 2박스 시킴)",
 		"location" : "2층 냉장",
 		"order_cell" : ""
+	},
+	{
+		"id" : 237,
+		"item_name" : "피칸분태",
+		"supplier" : "웰푸드",
+		"order_rule" : "4~5개 유지",
+		"location" : "",
+		"order_cell" : "#orderSheetWellFood tr:nth-child(24) th:nth-child(6)"
 	},
 ];
