@@ -2746,25 +2746,100 @@
     }
 
     function downloadImage1() {
-      const time = `${Date.now()}`;
+      alert("버그 수정 1");
+      const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+      if (isIOS) {
+        alert("현재 디바이스는 IOS.");
+      }
+
+      const time = Date.now();
       const sheet1 = document.getElementById("orderSheetGnfs1");
+
       html2canvas(sheet1, { scale: 2 }).then(canvas => {
-        const link = document.createElement("a");
-        link.download = `${time} 지엔 발주표_1.png`;
-        link.href = canvas.toDataURL("image/png");
-        link.click();
+        canvas.toBlob(blob => {
+          if (!blob) return;
+
+          const url = URL.createObjectURL(blob);
+
+          const link = document.createElement("a");
+          link.href = url;
+          link.download = `${time} 지엔 발주표_1.png`;
+
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+
+          URL.revokeObjectURL(url);
+        }, "image/png");
       });
+
+      // const time = `${Date.now()}`;
+      // const sheet1 = document.getElementById("orderSheetGnfs1");
+      // html2canvas(sheet1, { scale: 2 }).then(canvas => {
+      //   const link = document.createElement("a");
+      //   link.download = `${time} 지엔 발주표_1.png`;
+      //   link.href = canvas.toDataURL("image/png");
+      //   link.click();
+      // });
     }
 
     function downloadImage2() {
-      const time = `${Date.now()}`;
-      const sheet2 = document.getElementById("orderSheetGnfs2");
-      html2canvas(sheet2, { scale: 2 }).then(canvas => {
-        const link = document.createElement("a");
-        link.download = `${time} 지엔 발주표_2.png`;
-        link.href = canvas.toDataURL("image/png");
-        link.click();
+
+      alert("버그 수정 2");
+      const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+      if (isIOS) {
+        alert("현재 디바이스는 IOS.");
+      }
+
+      const sheet1 = document.getElementById("orderSheetGnfs1");
+
+      html2canvas(sheet1, { scale: 2 }).then(canvas => {
+        const image = canvas.toDataURL("image/png");
+
+        const win = window.open("", "_blank");
+
+        if (!win) {
+          alert("팝업이 차단되었습니다.");
+          return;
+        }
+
+        win.document.write(`
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <title>지엔 발주표</title>
+                <style>
+                    body {
+                        margin: 0;
+                        background: #333;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        min-height: 100vh;
+                    }
+                    img {
+                        max-width: 100%;
+                        height: auto;
+                    }
+                </style>
+            </head>
+            <body>
+                <img src="${image}">
+            </body>
+            </html>
+        `);
+
+        win.document.close();
       });
+
+      // const time = `${Date.now()}`;
+      // const sheet2 = document.getElementById("orderSheetGnfs2");
+      // html2canvas(sheet2, { scale: 2 }).then(canvas => {
+      //   const link = document.createElement("a");
+      //   link.download = `${time} 지엔 발주표_2.png`;
+      //   link.href = canvas.toDataURL("image/png");
+      //   link.click();
+      // });
     }
 
     function downloadImage3() {
