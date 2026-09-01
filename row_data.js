@@ -1795,7 +1795,7 @@ const data = [
   },
   {
     id: 233,
-    item_name: "세미드라이이스트 레드",
+    item_name: "세미드라이이스트 레드(냉동)",
     supplier: "지엔",
     order_rule: "3개 유지",
     location: "2층 냉동",
@@ -1803,7 +1803,7 @@ const data = [
   },
   {
     id: 234,
-    item_name: "세미드라이이스트 골드",
+    item_name: "세미드라이이스트 골드(냉동)",
     supplier: "지엔",
     order_rule: "3개 유지",
     location: "2층 냉동",
