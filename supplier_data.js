@@ -35,6 +35,8 @@ const sunin = makeSupplierData(
   ]
 );
 
+const sunin_cheese = makeSupplierData(data, [245]);
+
 const hosu = makeSupplierData(data, [155, 156, 157, 158]);
 
 const boram = makeSupplierData(data, [164]);
