@@ -403,10 +403,10 @@ const data = [
   {
     id: 52,
     item_name: "아몬드슬라이스",
-    supplier: "지엔",
+    supplier: "누리",
     order_rule: "2박스 유지",
     location: "선반2-B-3F",
-    order_cell: "#orderSheetGnfs1 tr:nth-child(34) th:nth-child(3)",
+    order_cell: null,
   },
   {
     id: 53,
