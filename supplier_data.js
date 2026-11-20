@@ -25,13 +25,13 @@ const gnfs_well = makeSupplierData(
   ]
 );
 
-const noori = makeSupplierData(data, [150, 151, 52]);
+const noori = makeSupplierData(data, [78, 150, 151, 52]);
 
 const sunin = makeSupplierData(
   data,
   [
     241, 242, 141, 142, 143, 144, 145, 245, 246, 146, 147, 149, 197, 212, 213, 214, 215, 216,
-    219, 225, 228, 220, 221,
+    219, 225, 228, 220, 221, 248, 249
   ]
 );
 

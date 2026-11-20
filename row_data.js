@@ -611,10 +611,10 @@ const data = [
   {
     id: 78,
     item_name: "식용유",
-    supplier: "지엔",
-    order_rule: "4개 이하일 때 8개 맞추기 (주말엔 무조건 8개 맞추기)",
+    supplier: "누리",
+    order_rule: "수요일 12개 이상 맞추",
     location: "",
-    order_cell: "#orderSheetGnfs2 tr:nth-child(12) th:nth-child(3)",
+    order_cell: "",
   },
   {
     id: 79,
@@ -1912,5 +1912,21 @@ const data = [
     order_rule: "16B 유지",
     location: "",
     order_cell: "#orderSheetGnfs3 tr:nth-child(32) th:nth-child(3)",
+  },
+  {
+    id: 248,
+    item_name: "오렌지 제스트 500g",
+    supplier: "선인",
+    order_rule: "반죽실에서 요청시 발주 (쁘띠푸르 재료)",
+    location: "2층 냉동",
+    order_cell: "",
+  },
+  {
+    id: 249,
+    item_name: "레몬 제스트 500g",
+    supplier: "선인",
+    order_rule: "?? 슈톨렌 재료",
+    location: "2층 냉동",
+    order_cell: "",
   },
 ];
